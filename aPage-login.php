@@ -10,16 +10,21 @@
         $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']) or die("Errore: ".mysqli_connect_error());
         $username = mysqli_real_escape_string($conn, $_POST["userName"]);
         $password = mysqli_real_escape_string($conn, $_POST["passWord"]);
-        $query = "SELECT * FROM persona WHERE cf = '".$username."' AND password = '".$password."'";
+        $password = password_hash($password, PASSWORD_BCRYPT);
+        $query = "SELECT * FROM persona WHERE cf = '".$username."'";
         $res = mysqli_query($conn, $query) or die("Errore: ".mysqli_error($conn));
         mysqli_close($conn);
         if(mysqli_num_rows($res) > 0){
-            $_SESSION["userNameLudoteca"] = $_POST["userName"];
-            header("Location: ".$urlChiamata);
-            mysqli_free_result($res);
-            mysqli_close($conn);
-            exit;
-        } else
+            $rispostaDatabase = mysqli_fetch_assoc($res);
+            if (password_verify($_POST['passWord'], $rispostaDatabase['Password'])) {
+                $_SESSION["userNameLudoteca"] = $_POST["userName"];
+                header("Location: ".$urlChiamata);
+                mysqli_free_result($res);
+                mysqli_close($conn);
+                exit;
+            }
+        }
+        else
             $errore = "Credenziali non valide";
     } 
     else if (isset($_POST["username"]) || isset($_POST["password"]))
@@ -44,13 +49,13 @@
             <form name="login" method="post"> 
                 <h2>Bentornato</h2>
                 <label <?php if(isset($errore) && ($errore === "Credenziali non valide" || empty($_POST["userName"]))) echo "class=errore"?>
-                    >Username: <input type="text" name="userName" class='barraInput' <?php if(!empty($_POST["userName"])) echo "value=".$_POST["userName"]?>></label>
+                    >Username: <input type="text" name="userName" class='barraInput' data-max="20"<?php if(!empty($_POST["userName"])) echo "value=".$_POST["userName"]?>></label>
                 <label <?php if(isset($errore) && ($errore === "Credenziali non valide" || empty($_POST["passWord"]))) echo "class=errore"?>
-                    >Password: <input type="password" name="passWord" class='barraInput' <?php if(!empty($_POST["passWord"])) echo "value=".$_POST["passWord"]?>></label>
+                    >Password: <input type="password" name="passWord" class='barraInput' data-max="200"<?php if(!empty($_POST["passWord"])) echo "value=".$_POST["passWord"]?>></label>
                 <label>&nbsp<input type='submit' class="submit"></label>
                 <p class="pointer">Se non hai un account registrati!</p>
             </form>
         </main>
-        <p class='errore'> <?php if(isset($errore)) echo  $errore; ?></p>
+        <p class='errore'><?php if(isset($errore)) echo  $errore; ?></p>
     </body>
 </html>
