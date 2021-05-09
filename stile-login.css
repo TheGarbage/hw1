@@ -1,3 +1,4 @@
+/*GENERALI----------------------------------------------------------------------------------*/
 body{
     width: 100vw;
     height: 100vh;
@@ -19,12 +20,24 @@ form{
     margin: 0px;
 }
 
+/*TESTO----------------------------------------------------------------------------------*/
 form h2{
     margin-top: 15px;
     margin-bottom: 30px;
     font-family: 'Roboto', sans-serif;
 }
 
+form p{
+    font-size: 0.75em;
+    text-align: center;
+    margin: 0px;
+    width: fit-content;
+    padding: 2px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*INPUT----------------------------------------------------------------------------------*/
 label{
     display: flex;
     justify-content: space-between;
@@ -38,10 +51,6 @@ label{
     margin: 30px 0px;
 }
 
-#privacy.errore{
-    color: rgba(255, 0, 0, .9);
-}
-
 input{
     margin-left: 150px;
     font-size: 0.8em;
@@ -52,21 +61,7 @@ input[name="privacy"]{
     margin-right: 10px;
 }
 
-form p{
-    font-size: 0.75em;
-    text-align: center;
-    margin: 0px;
-    width: fit-content;
-    padding: 2px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-p:hover{
-    border-radius: 20px;
-    background-color: rgba(255, 255, 255, .1);
-}
-
+/*ERRORI----------------------------------------------------------------------------------*/
 p.errore{
     color: rgba(255, 0, 0, .9);
     margin-top: 20px; 
@@ -74,4 +69,15 @@ p.errore{
 
 label.errore input{
     border-color: rgba(255, 0, 0, .9);
+}
+
+#privacy.errore{
+    color: rgba(255, 0, 0, .9);
+}
+
+
+/*HOVER----------------------------------------------------------------------------------*/
+p:hover{
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, .1);
 }

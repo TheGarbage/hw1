@@ -6,18 +6,15 @@ function rispostaRegistrazione(response){
 function stampa(json){
     const errore = document.querySelector('p.errore');
     if(json.risposta === "ok"){
-        form.submit();
         if(errore.textContent === "Username non disponibile")
             form.userName.parentNode.classList.remove('errore');
+        form.submit();
     }
     else{
+        errore.textContent = json.risposta;
         form.classList.remove('hidden');
-        if(json.risposta === "Username non disponibile"){
+        if(json.risposta === "Username non disponibile")
             errore.textContent = "Username non disponibile";
-            form.userName.parentNode.classList.add('errore');
-        }
-        else
-            errore.textContent = json.risposta;
     }
 }
 

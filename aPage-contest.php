@@ -1,4 +1,28 @@
-<?php session_start(); ?>
+<?php 
+    session_start(); 
+    if(isset($_SESSION["userNameLudoteca"])){
+        require('db-config.php');
+        $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
+        if(!$conn){
+            $errore = "Impossibile connettersi al server, riprovare";
+            exit;
+        }
+        $username = mysqli_real_escape_string($conn, $_SESSION['userNameLudoteca']);
+        $query = "SELECT * FROM contest WHERE cf = '".$username."'";
+        $res = mysqli_query($conn, $query);
+        if(!$res){
+            $errore = "Errore select, riprovare";
+            mysqli_close($conn);
+            exit;
+        }
+        mysqli_close($conn);
+        if(mysqli_num_rows($res) > 0){
+            $rispostaDatabase = mysqli_fetch_assoc($res);
+            mysqli_free_result($res);
+            $errore = "Grazie per aver partecipato! </br> Hai selezionato: ".$rispostaDatabase['Nome_videogioco'];
+        }
+    }
+?>
 
 <html>
     <head>
@@ -38,17 +62,19 @@
                routine post-covid e il più selezionato vincerà il contest.
             </p>
         </section>
-        <?php echo (isset($_SESSION["userNameLudoteca"])) ?
-            "<form id='contestVideogiochi'>
-                <input type='text' id='barraRicerca' class='barraInput' value='Cerca i tuoi giochi:'>
-                <input type='submit' id='submit' class='submit' value='cerca'>
-            </form>
-            <section id='giochiForm'></section>
-            <p id='responso' class='hidden'>Grazie per aver partecipato! </br>
+        <?php 
+            if(isset($errore)) echo "<p id='responso'>".$errore."</p>"; 
+            else echo (isset($_SESSION["userNameLudoteca"])) ?
+                "<form id='contestVideogiochi'>
+                    <input type='text' id='barraRicerca' class='barraInput' value='Cerca i tuoi giochi:'>
+                    <input type='submit' id='submit' class='submit' value='cerca'>
+                </form>
+                <section id='giochiForm'></section>
+                <p id='responso' class='hidden'>Grazie per aver partecipato! </br>
                                                 Hai selezionato: 
-                                                </p>" 
-            :
-            "<p id='responso'> <a href='aPage-login.php?urlChiamata=aPage-contest.php'>Loggati per partecipare!</a></p>" 
+                </p>" 
+                :
+                "<p id='responso'> <a href='aPage-login.php?urlChiamata=aPage-contest.php'>Loggati per partecipare!</a></p>" ;
         ?>
         <div id="distanziatore"></div>
         <div id="footerConteiner">

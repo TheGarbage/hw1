@@ -1,12 +1,12 @@
 <?php 
-    /*if(!isset($_POST['nomeCognome']) || empty($_POST['nomeCognome']) || $_POST['nomeCognome'].length > 50  ||
-       !isset($_POST['userName']) || empty($_POST['userName']) || $_POST['userName'].length > 20 ||
-       !isset($_POST['passWord']) || empty($_POST['passWord']) || $_POST['passWord'].length > 200 ||
-       $_POST['passWord'] !== $_POST['confermaPassword'] ||
-       !isset($_POST['occupazione']) || empty($_POST['occupazione']) || $_POST['occupazione'].length > 30 ||
+    if(!isset($_POST['nomeCognome']) || empty($_POST['nomeCognome']) || strlen($_POST['nomeCognome']) > 50  ||
+       !isset($_POST['userName']) || empty($_POST['userName']) || strlen($_POST['userName']) > 20 ||
+       !isset($_POST['passWord']) || empty($_POST['passWord']) || strlen($_POST['passWord']) > 200 ||
+       !isset($_POST['confermaPassword']) || $_POST['passWord'] !== $_POST['confermaPassword'] ||
+       !isset($_POST['occupazione']) || empty($_POST['occupazione']) || strlen($_POST['occupazione']) > 30 ||
        !isset($_POST['dataNascita']) || empty($_POST['dataNascita']) || !strtotime($_POST['dataNascita']))
             echo json_encode(array('risposta' => "Errore formattazione, riprovare"));
-    else*/{
+    else{
         require ('db-config.php');
         $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
         if(!$conn){
@@ -18,6 +18,8 @@
         $res = mysqli_query($conn, $query);
         if(!$res){
             echo json_encode(array('risposta' => "Errore select, riprovare"));
+            mysqli_close($conn);
+            exit;
         }
         else if(mysqli_num_rows($res) > 0)
             echo json_encode(array('risposta' => "Username non disponibile"));
@@ -34,5 +36,7 @@
             }
             echo json_encode(array('risposta' => "ok"));
         }
+        mysqli_free_result($res);
+        mysqli_close($conn);
     }
 ?>

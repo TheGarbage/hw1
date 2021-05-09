@@ -7,25 +7,31 @@
     }
     if(!empty($_POST["userName"]) && !empty($_POST["passWord"])){
         require ('db-config.php');
-        $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']) or die("Errore: ".mysqli_connect_error());
+        $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
+        if(!$conn){
+            $errore = "Impossibile connettersi al server, riprovare";
+            exit;
+        }
         $username = mysqli_real_escape_string($conn, $_POST["userName"]);
         $password = mysqli_real_escape_string($conn, $_POST["passWord"]);
         $password = password_hash($password, PASSWORD_BCRYPT);
         $query = "SELECT * FROM persona WHERE cf = '".$username."'";
-        $res = mysqli_query($conn, $query) or die("Errore: ".mysqli_error($conn));
+        $res = mysqli_query($conn, $query);
         mysqli_close($conn);
+        if(!$res){
+            $errore = "Errore select, riprovare";
+            exit;
+        }
         if(mysqli_num_rows($res) > 0){
             $rispostaDatabase = mysqli_fetch_assoc($res);
             if (password_verify($_POST['passWord'], $rispostaDatabase['Password'])) {
                 $_SESSION["userNameLudoteca"] = $_POST["userName"];
                 header("Location: ".$urlChiamata);
-                mysqli_free_result($res);
-                mysqli_close($conn);
-                exit;
             }
         }
         else
             $errore = "Credenziali non valide";
+        mysqli_free_result($res);
     } 
     else if (isset($_POST["username"]) || isset($_POST["password"]))
         $errore = "Devi compilare tutti i campi";

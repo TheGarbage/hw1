@@ -1,3 +1,13 @@
+//FETCH DATABASE ---------------------------------------------------------------------------------------------------------------------------------------------------------
+function rispostaDataBase(json){
+    const responso = document.querySelector('#responso');
+    if(json.risposta === "ok")
+        responso.classList.remove('hidden');
+    else 
+        responso.textContent = json.risposta;
+    responso.classList.remove('hidden');
+}
+
 //FUNZIONI PER CONTEST -------------------------------------------------------------------------------------------------------------------------------------------------------
 function fineContest(event){
     const responso = document.querySelector('#responso');
@@ -5,7 +15,9 @@ function fineContest(event){
     responso.innerHTML += giocoScelto;
     document.querySelector('#contestVideogiochi').remove();
     document.querySelector('#giochiForm').remove();
-    responso.classList.remove('hidden');
+    fetch(
+        "server-contestFaseScelta.php?videogioco=" + encodeURI(giocoScelto)
+    ).then(onResponse).then(rispostaDataBase);
 }
 
 function seleziona(event){
@@ -70,7 +82,7 @@ function ricerca(event){
     const gioco = document.querySelector('#barraRicerca').value;
     document.querySelector('#giochiForm').innerHTML = '';
     fetch(
-        urlApi + "&key=" + keyApiSuperSicura + "&search=" + gioco
+        "server-contestFaseRicerca.php?search=" + encodeURI(gioco)
     ).then(onResponse).then(onJsonGiochi);
 }
 
@@ -86,13 +98,11 @@ function resettaValue(event){
 }
 
 //Configurazione Iniziale -------------------------------------------------------------------------------------------------------------------------------------------------------
-const keyApiSuperSicura = "ca7172b5b84a49d1a3afdb1d2edd251e";
-const urlApi = "https://api.rawg.io/api/games?";
 const barraRicerca = document.querySelector('#barraRicerca');
 barraRicerca.addEventListener("click", cancellaValue);
 barraRicerca.addEventListener("blur", resettaValue);
 const form = document.querySelector('form');
 form.addEventListener('submit', ricerca);
 fetch(
-    urlApi + "&key=" + keyApiSuperSicura + "&ordering=-metacritic&page_size=50"
+    "server-contestFaseRicerca.php?default=si"
 ).then(onResponse).then(onJsonGiochi);
