@@ -30,6 +30,7 @@
         <title>mhw3_Ludoteca</title>
         <link rel="stylesheet" href="stile-principale.css">
         <link rel="stylesheet" href="stile-contest.css">
+        <script src="script-menuMobile.js" defer></script>
         <?php if(isset($_SESSION["userNameLudoteca"])) echo "<script src='script-api-contest.js' defer></script>" ?>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -40,9 +41,12 @@
     <body>   
         <header id="header-sito">
             <section id="menu-pochi-pixel">
-                <div class="mini-menu"></div>
-                <div class="mini-menu"></div>
-                <div class="mini-menu"></div>
+                    <div id="nav-conteiner" class="hidden"></div>
+                    <div id="bottone">
+                        <div class="mini-menu"></div>
+                        <div class="mini-menu"></div>
+                        <div class="mini-menu"></div>
+                    </div>
             </section>
             <h1>Ludoteca</h1>
             <section id="menu">

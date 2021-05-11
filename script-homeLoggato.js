@@ -1,3 +1,91 @@
+//FETCH DATABASE -------------------------------------------------------------------------------------------------------------------------------------------------------
+function onJsonVideogiochi(giochiJSon){
+    let indice;
+    for(let id in index){
+        if(giochiJSon[0]['categoriaRisultati'] === index[id])
+            indice = id;
+    }
+    const sottoSito = document.querySelector(".sotto-siti [data-tema=" + indice + ']');
+    const preferiti = sottoSito.querySelector(".preferiti");
+    const divPreferiti = preferiti.querySelector(".giochi");
+    const nonPreferiti = sottoSito.querySelector(".nonPreferiti");
+    const divNonPreferiti = nonPreferiti.querySelector(".giochi");
+    const inputCerca = sottoSito.querySelector('input'); 
+    inputCerca.classList.remove('hidden');
+    for(const item of giochiJSon[1]['videogiochi']){
+        const gioco = document.createElement('div');
+        gioco.classList.add('gioco');
+        gioco.classList.add('giocoMinoriDettagli');
+        gioco.dataset.codice = item['codice'] + "nonPreferito";
+        divNonPreferiti.appendChild(gioco);
+        const noClick = document.createElement('section');
+        noClick.classList.add('noClick');
+        gioco.appendChild(noClick);
+        const divGioco = document.createElement('div');
+        noClick.appendChild(divGioco);
+        const stella = document.createElement('img');
+        stella.src = "Imm-Stella.jpg";
+        stella.classList.add('stella');
+        divGioco.appendChild(stella);
+        const nomeGioco = document.createElement('h5');
+        nomeGioco.textContent = item['titolo'];
+        const giocoAperto= {};
+        giocoAperto.gioco = gioco;
+        giocoAperto.lista = [];
+        for(lettera of nomeGioco.textContent.toUpperCase())
+            giocoAperto.lista.unshift(lettera);
+        giochiAperti.unshift(giocoAperto);
+        divGioco.appendChild(nomeGioco);
+        const imgPreferiti = document.createElement('img');
+        imgPreferiti.classList.add('pointer');
+        imgPreferiti.classList.add('stellaPiu');
+        imgPreferiti.dataset.codice = item['codice'];
+        imgPreferiti.src = "Imm-NonPreferito.jpg";
+        imgPreferiti.addEventListener("click", inserisciPreferiti);
+        divGioco.appendChild(imgPreferiti);
+        const imgGioco = document.createElement('img');
+        imgGioco.src = "Imm-" + item.categoria + item.titolo + ".jpg";
+        imgGioco.dataset.imgGioco = true;
+        noClick.appendChild(imgGioco);
+        const cliccaQui = document.createElement('p');
+        cliccaQui.textContent = "Clicca per più info";
+        cliccaQui.classList.add("pointer");
+        cliccaQui.addEventListener('click', mostraDettagli);
+        noClick.appendChild(cliccaQui);
+        const click = document.createElement('section');
+        click.classList.add('click');
+        click.classList.add('hidden');
+        gioco.appendChild(click);
+        const descrizione = document.createElement('h5');
+        descrizione.innerHTML = "Categoria: " + item['categoria'] + '</br>' + item['descrizione'];
+        click.appendChild(descrizione);
+        if(giochiPreferiti.indexOf( imgPreferiti.dataset.codice) !== -1){
+            imgPreferiti.classList.add('hidden');
+            gioco.classList.add('selezionatoPreferito');
+            stella.classList.remove('hidden');
+            if(preferiti.classList.contains('hidden'))
+                preferiti.classList.remove('hidden');
+            divPreferiti.appendChild(creaPreferito(gioco, item.codice));
+        }
+        else
+            stella.classList.add('hidden');
+    }
+}
+
+function esitoModifica(json){
+    if(json.risposta !== "ok")
+        alert(json.risposta);
+}
+
+function onJsonPreferiti(preferiti){
+    for(item of preferiti)
+        giochiPreferiti.unshift(item);
+}
+
+function onResponse(response){
+    return response.json();
+}
+
 //FUNZIONI D'APPOGGIO -------------------------------------------------------------------------------------------------------------------------------------------------------
 function nascondiGiochi(lettera){
     for(item of giochiAperti){
@@ -127,87 +215,11 @@ function creaSottoSito(blocco){
     return newSottoSito;
 }
 
-function onJsonVideogiochi(giochiJSon){
-    let indice;
-    for(let id in index){
-        if(giochiJSon[0]['categoriaRisultati'] === index[id])
-            indice = id;
-    }
-    const sottoSito = document.querySelector(".sotto-siti [data-tema=" + indice + ']');
-    const preferiti = sottoSito.querySelector(".preferiti");
-    const divPreferiti = preferiti.querySelector(".giochi");
-    const nonPreferiti = sottoSito.querySelector(".nonPreferiti");
-    const divNonPreferiti = nonPreferiti.querySelector(".giochi");
-    const inputCerca = sottoSito.querySelector('input'); 
-    inputCerca.classList.remove('hidden');
-    for(const item of giochiJSon[1]['videogiochi']){
-        const gioco = document.createElement('div');
-        gioco.classList.add('gioco');
-        gioco.classList.add('giocoMinoriDettagli');
-        gioco.dataset.codice = item['codice'] + "nonPreferito";
-        divNonPreferiti.appendChild(gioco);
-        const noClick = document.createElement('section');
-        noClick.classList.add('noClick');
-        gioco.appendChild(noClick);
-        const divGioco = document.createElement('div');
-        noClick.appendChild(divGioco);
-        const stella = document.createElement('img');
-        stella.src = "Imm-Stella.jpg";
-        stella.classList.add('stella');
-        divGioco.appendChild(stella);
-        const nomeGioco = document.createElement('h5');
-        nomeGioco.textContent = item['titolo'];
-        const giocoAperto= {};
-        giocoAperto.gioco = gioco;
-        giocoAperto.lista = [];
-        for(lettera of nomeGioco.textContent.toUpperCase())
-            giocoAperto.lista.unshift(lettera);
-        giochiAperti.unshift(giocoAperto);
-        divGioco.appendChild(nomeGioco);
-        const imgPreferiti = document.createElement('img');
-        imgPreferiti.classList.add('pointer');
-        imgPreferiti.classList.add('stellaPiu');
-        imgPreferiti.dataset.codice = item['codice'];
-        imgPreferiti.src = "Imm-NonPreferito.jpg";
-        imgPreferiti.addEventListener("click", inserisciPreferiti);
-        divGioco.appendChild(imgPreferiti);
-        const imgGioco = document.createElement('img');
-        imgGioco.src = "Imm-" + item.categoria + item.titolo + ".jpg";
-        imgGioco.dataset.imgGioco = true;
-        noClick.appendChild(imgGioco);
-        const cliccaQui = document.createElement('p');
-        cliccaQui.textContent = "Clicca per più info";
-        cliccaQui.classList.add("pointer");
-        cliccaQui.addEventListener('click', mostraDettagli);
-        noClick.appendChild(cliccaQui);
-        const click = document.createElement('section');
-        click.classList.add('click');
-        click.classList.add('hidden');
-        gioco.appendChild(click);
-        const descrizione = document.createElement('h5');
-        descrizione.innerHTML = "Categoria: " + item['categoria'] + '</br>' + item['descrizione'];
-        click.appendChild(descrizione);
-        if(giochiPreferiti.indexOf( imgPreferiti.dataset.codice) !== -1){
-            imgPreferiti.classList.add('hidden');
-            gioco.classList.add('selezionatoPreferito');
-            stella.classList.remove('hidden');
-            if(preferiti.classList.contains('hidden'))
-                preferiti.classList.remove('hidden');
-            divPreferiti.appendChild(creaPreferito(gioco, item.codice));
-        }
-        else
-            stella.classList.add('hidden');
-    }
-}
-
-function onResponse(response){
-    return response.json();
-}
-
 //FUNZIONI LISTENER  -------------------------------------------------------------------------------------------------------------------------------------------------------
 function inserisciPreferiti(event){  
     const codice = event.currentTarget.dataset.codice + "nonPreferito";
     giochiPreferiti.unshift(event.currentTarget.dataset.codice);
+    fetch("server-preferitiInserimento.php?codice=" + event.currentTarget.dataset.codice).then(onResponse).then(esitoModifica);
     const giochi = document.querySelectorAll('.gioco[data-codice ="' + codice + '"]');
     let imgPreferiti;
     let preferiti;
@@ -244,6 +256,7 @@ function togliPreferiti(event){
         item.querySelector('.stella').classList.add('hidden');
     }
     giochiPreferiti.splice(giochiPreferiti.indexOf(imgPreferiti.dataset.codice), 1);
+    fetch("server-preferitiEliminazione.php?codice=" + imgPreferiti.dataset.codice).then(onResponse).then(esitoModifica);
 }
 
 function ricerca(event){
@@ -378,6 +391,7 @@ const index = {
 let giochiAperti = [];
 let vecchiaValue = '';
 const giochiPreferiti = [];
+fetch("server-preferitiLettura.php").then(onResponse).then(onJsonPreferiti);
 const blocchi = document.querySelectorAll('#blocchi .blocco');
 for (const blocco of blocchi){
     blocco.addEventListener('mouseover', vediDidascalia);

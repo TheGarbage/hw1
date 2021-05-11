@@ -78,7 +78,56 @@ body{
 
 /*MENU MOBILE----------------------------------------------------------------------------------*/
 #menu-pochi-pixel{
+    top: 200px;
+    position: fixed;
     display: none;
+    width: 300px;
+    z-index: 3;
+    font-size: 1.8rem;
+}
+
+#nav-conteiner{
+    background-color: rgba(17, 24, 40, .97);
+    position: relative;
+    top: -200px;
+    height: 100vh;
+    width: 87%;
+}
+
+#menu-pochi-pixel #login{
+    display: block;
+    border-radius: 20px;
+    width: 80%;
+    position: static;
+    margin: 0px auto;
+    margin-top: 20vh;
+    font-size: 1.4rem;
+}
+
+#menu-pochi-pixel li{
+    margin-top: 6px; 
+}
+
+
+#menu-pochi-pixel nav{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#menu-pochi-pixel nav a{
+    margin: 10px;
+}
+
+#bottone{
+    background-color: rgba(255, 255, 255, .5);
+    height: 40px;
+    width: 13%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .mini-menu{
@@ -317,10 +366,10 @@ body{
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    margin-bottom: 0px;
 }
 
 .sub-nonPreferiti input{
-    height: 25px;
     width: 70%;
     font-size: 20px;
     margin-left: 10px;
@@ -714,16 +763,7 @@ nav a:hover{
     }
     
     #menu-pochi-pixel{
-        position: fixed;
-        background-color: rgba(255, 255, 255, .5);
-        height: 40px;
-        width: 7%;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
-        top: 200px;
     }
 
     #blocchi{

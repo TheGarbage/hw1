@@ -14,7 +14,7 @@
             exit;
         }
         $username = mysqli_real_escape_string($conn, $_POST["userName"]);
-        $query = "SELECT * FROM persona WHERE cf = '".$username."'";
+        $query = "SELECT cf FROM persona WHERE cf = '".$username."'";
         $res = mysqli_query($conn, $query);
         if(!$res){
             echo json_encode(array('risposta' => "Errore select, riprovare"));

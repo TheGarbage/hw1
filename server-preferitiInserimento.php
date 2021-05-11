@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    if(isset($_GET['videogioco']) && !(strlen($_GET['videogioco']) > 100 && !empty($_GET['videogioco'])) && isset($_SESSION["userNameLudoteca"])){
+    if(isset($_GET['codice']) && !(strlen($_GET['codice']) > 100 && !empty($_GET['codice'])) && isset($_SESSION["userNameLudoteca"])){
         require ('db-config.php');
         $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
         if(!$conn){
@@ -8,8 +8,8 @@
             exit;
         }
         $username = mysqli_real_escape_string($conn, $_SESSION["userNameLudoteca"]);
-        $videogioco = mysqli_real_escape_string($conn, $_GET['videogioco']);
-        $query = "INSERT INTO contest(CF, nome_videogioco) VALUES('$username', '$videogioco')";
+        $codice = mysqli_real_escape_string($conn, $_GET['codice']);
+        $query = "INSERT INTO preferiti(CF, Codice_videogioco) VALUES('$username', '$codice')";
         if(!mysqli_query($conn, $query)){
             echo json_encode(array('risposta' => "Errore inserimento, riprovare"));
             mysqli_close($conn);

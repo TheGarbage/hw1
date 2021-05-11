@@ -20,11 +20,9 @@
                                                   LEFT JOIN Quiz q ON (v.codice=q.codice)";
             
         $res = mysqli_query($conn, $query);
-        if(!$res){
+        mysqli_close($conn);
+        if(!$res)
             echo json_encode(array('risposta' => "Errore select, riprovare"));
-            mysqli_close($conn);
-            exit;
-        }
         else if(mysqli_num_rows($res) > 0){
             $response = array();
             $response[] = array('categoriaRisultati' => $_GET['categoria']);
@@ -58,7 +56,6 @@
             $response[] = array('videogiochi' => $videogiochi);
             echo json_encode($response);
             mysqli_free_result($res);
-            mysqli_close($conn);
         }
     }
 ?>

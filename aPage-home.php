@@ -5,9 +5,9 @@
         <meta charset="utf-8">
         <title>mhw1_Ludoteca</title>
         <link rel="stylesheet" href="stile-principale.css">
-        <script src="contents.js" defer></script>
-        <script src="script.js" defer></script>
+        <script src=<?php echo (isset($_SESSION["userNameLudoteca"])) ?  "script-homeLoggato.js" : "script-home.js"; ?> defer></script>
         <script src="script-api-banner.js" defer></script>
+        <script src="script-menuMobile.js" defer></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
@@ -18,9 +18,12 @@
         <div id="body-overlay" class="overlay hidden"></div>
         <header id="header-sito" class="sito-principale">
             <section id="menu-pochi-pixel">
-                <div class="mini-menu"></div>
-                <div class="mini-menu"></div>
-                <div class="mini-menu"></div>
+                <div id="nav-conteiner" class="hidden"></div>
+                <div id="bottone">
+                    <div class="mini-menu"></div>
+                    <div class="mini-menu"></div>
+                    <div class="mini-menu"></div>
+                </div>
             </section>
             <h1>Ludoteca</h1>
             <section id="menu">

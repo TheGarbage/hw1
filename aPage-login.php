@@ -28,6 +28,8 @@
                 $_SESSION["userNameLudoteca"] = $_POST["userName"];
                 header("Location: ".$urlChiamata);
             }
+            else
+                $errore = "Credenziali non valide";
         }
         else
             $errore = "Credenziali non valide";
