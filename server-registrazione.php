@@ -1,7 +1,7 @@
 <?php 
     if(!isset($_POST['nomeCognome']) || empty($_POST['nomeCognome']) || strlen($_POST['nomeCognome']) > 50  ||
        !isset($_POST['userName']) || empty($_POST['userName']) || strlen($_POST['userName']) > 20 ||
-       !isset($_POST['passWord']) || empty($_POST['passWord']) || strlen($_POST['passWord']) > 200 ||
+       !isset($_POST['passWord']) || empty($_POST['passWord']) ||
        !isset($_POST['confermaPassword']) || $_POST['passWord'] !== $_POST['confermaPassword'] ||
        !isset($_POST['occupazione']) || empty($_POST['occupazione']) || strlen($_POST['occupazione']) > 30 ||
        !isset($_POST['dataNascita']) || empty($_POST['dataNascita']) || !strtotime($_POST['dataNascita']))

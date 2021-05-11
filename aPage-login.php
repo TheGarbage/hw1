@@ -57,7 +57,7 @@
                 <label <?php if(isset($errore) && ($errore === "Credenziali non valide" || empty($_POST["userName"]))) echo "class=errore"?>
                     >Username: <input type="text" name="userName" class='barraInput' data-max="20"<?php if(!empty($_POST["userName"])) echo "value=".$_POST["userName"]?>></label>
                 <label <?php if(isset($errore) && ($errore === "Credenziali non valide" || empty($_POST["passWord"]))) echo "class=errore"?>
-                    >Password: <input type="password" name="passWord" class='barraInput' data-max="200"<?php if(!empty($_POST["passWord"])) echo "value=".$_POST["passWord"]?>></label>
+                    >Password: <input type="password" name="passWord" class='barraInput'<?php if(!empty($_POST["passWord"])) echo "value=".$_POST["passWord"]?>></label>
                 <label>&nbsp<input type='submit' class="submit"></label>
                 <p class="pointer">Se non hai un account registrati!</p>
             </form>

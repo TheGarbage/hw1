@@ -33,14 +33,7 @@ function onJsonVaccini(vacciniJSon){
     const avanzamentoBarra = document.createElement('div');
     avanzamentoBarra.style.width = ((result.people_vaccinated / result.population) * 100) + '%';
     barra.appendChild(avanzamentoBarra);
-    const p = document.createElement('p');
-    p.id = ('contest');
-    p.textContent = "Nel frattempo partecipa al nostro ";
-    sezione.appendChild(p);
-    const link = document.createElement('a');
-    link.textContent = "contest!";
-    link.href="aPage-contest.php";
-    p.appendChild(link);
+    sezione.appendChild(document.querySelector('#contest'));
 }
 
 function onJsonCasi(casiJson){
@@ -74,6 +67,14 @@ function onJsonCasi(casiJson){
     const avanzamentoBarra = document.createElement('div');
     avanzamentoBarra.style.width = ((result.confirmed / result.population) * 100) + '%';
     barra.appendChild(avanzamentoBarra);
+    const p = document.createElement('p');
+    p.id = ('contest');
+    p.textContent = "Nel frattempo partecipa al nostro ";
+    sezione.appendChild(p);
+    const link = document.createElement('a');
+    link.textContent = "contest!";
+    link.href="aPage-contest.php";
+    p.appendChild(link);
     fetch("https://covid-api.mmediagroup.fr/v1/vaccines?country=Italy").then(onResponse).then(onJsonVaccini);
 }
 

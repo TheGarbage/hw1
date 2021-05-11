@@ -35,12 +35,6 @@ function controlloContenutoRegistrazione(event){
         form.userName.parentNode.classList.add('errore');
         form.userName.addEventListener('blur', controllaLunghezza);
     }
-    else if(form.passWord.value.length.toString() > form.passWord.dataset.max && 
-            !(form.passWord.value.length.toString().length < form.passWord.dataset.max.length)){
-        errore.textContent = "PassWord troppo lungo(Max 200)";
-        form.passWord.parentNode.classList.add('errore');
-        form.passWord.addEventListener('blur', controllaLunghezza);
-    }
     else if(form.occupazione.value.length.toString() > form.occupazione.dataset.max && 
             !(form.occupazione.value.length.toString().length < form.occupazione.dataset.max.length)){
         errore.textContent = "Ocupazione troppo lunga(Max 30)";
