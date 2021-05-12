@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 12, 2021 alle 15:31
--- Versione del server: 10.4.14-MariaDB
--- Versione PHP: 7.4.11
+-- Creato il: Mag 12, 2021 alle 21:43
+-- Versione del server: 10.4.18-MariaDB
+-- Versione PHP: 8.0.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -158,6 +158,13 @@ CREATE TABLE `contest` (
   `Cf` varchar(20) NOT NULL,
   `Nome_videogioco` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dump dei dati per la tabella `contest`
+--
+
+INSERT INTO `contest` (`Cf`, `Nome_videogioco`) VALUES
+('bbc99', 'Grand Theft Auto V');
 
 -- --------------------------------------------------------
 
@@ -316,7 +323,7 @@ DELIMITER ;
 
 CREATE TABLE `persona` (
   `CF` varchar(20) NOT NULL,
-  `Password` varchar(20) DEFAULT NULL,
+  `Password` varchar(60) DEFAULT NULL,
   `Nome` varchar(50) DEFAULT NULL,
   `Anno_nascita` date DEFAULT NULL,
   `Occupazione` varchar(30) DEFAULT NULL,
@@ -328,14 +335,15 @@ CREATE TABLE `persona` (
 --
 
 INSERT INTO `persona` (`CF`, `Password`, `Nome`, `Anno_nascita`, `Occupazione`, `Punti_totali`) VALUES
-('bbc99', 'admin', 'Giuseppe Calleri', '1999-09-03', 'Disoccupato', 242),
-('bbn9', 'admin', 'Fabio Nicosia', '1990-07-30', 'BioMedico', 220),
-('bccc79', 'admin', 'Alessandra Garaffo', '1979-02-11', 'Psicologo', 475),
-('bln01', 'admin', 'Francesca Didio', '2001-07-08', 'Studente', 680),
-('llpc01', 'admin', 'Paola Gullotta', '1995-09-11', 'Dentista', 75),
-('lmn98', 'admin', 'Fancesco Fichera', '1998-03-22', 'youtuber', 185),
-('mcr77', 'admin', 'Guglielmo Cantone', '1965-08-16', 'Imprenditore', 511),
-('yuv7', 'admin', 'Paola Valenti', '1969-09-11', 'Architetto', 110);
+('bbc99', '$2y$10$rzMrWweRHNw/20gn4bC.F.VuhYF77ow3ps.Cti5FR3uV2a9bqVnBG', 'Giuseppe Calleri', '1999-09-03', 'Disoccupato', 242),
+('bbn9', '$2y$10$SqMBaLRM5n2IN7IajVUoG.9Sc.xNvcPMH3SlRi.bPK/7mrrMtlKxu', 'Fabio Nicosia', '1990-07-30', 'BioMedico', 220),
+('bccc79', '$2y$10$e7NJDcmlxu775a2T2y3rJuIPFcHBSDVk2WpJREjqJJE8an1yuvZkS', 'Alessandra Garaffo', '1979-02-11', 'Psicologo', 475),
+('bln01', '$2y$10$P4d4rcfZ7.DaQ3B4q7fPM.w98WdNHxwrgDmo/CTANMfT40Zq9mFY.', 'Francesca Didio', '2001-07-08', 'Studente', 680),
+('llpc01', '$2y$10$nl6xA2Y5rDc5IoZZuTOaZen1QVSoJefBa5A3Sr1XgXHaHOQ2nBPt.', 'Paola Gullotta', '1995-09-11', 'Dentista', 75),
+('lmn98', '$2y$10$MCilTHlrwfDDz8VyYxPhtu2vwcdrlQ07jj0xcOT0NBj7W1/fIoBT.', 'Fancesco Fichera', '1998-03-22', 'youtuber', 185),
+('mcr77', '$2y$10$ScW5j9ug3ZFVkwDMYdkzwOWSdsGIGV9OsxEPxaif3.BgClKtYzDpe', 'Guglielmo Cantone', '1965-08-16', 'Imprenditore', 511),
+('TheGarbage', '$2y$10$KhRBmOlrlBKHUTZa.6sOR.Xdj55eytZD5FZHIA7RUdY6aXseLn9f.', 'Davide Bucchieri', '1999-05-27', 'studente', 0),
+('yuv7', '$2y$10$8bmkQpnW2OAX.jyNnOaxMO2l7PknemFxvj6Qd2996Y27fbjKpedXC', 'Paola Valenti', '1969-09-11', 'Architetto', 110);
 
 -- --------------------------------------------------------
 
@@ -381,6 +389,16 @@ CREATE TABLE `preferiti` (
   `Codice_videogioco` int(11) NOT NULL,
   `cf` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dump dei dati per la tabella `preferiti`
+--
+
+INSERT INTO `preferiti` (`Codice_videogioco`, `cf`) VALUES
+(1, 'bbc99'),
+(2, 'bbc99'),
+(5, 'bbc99'),
+(10, 'bbc99');
 
 -- --------------------------------------------------------
 
@@ -597,11 +615,11 @@ INSERT INTO `videogioco` (`Codice`, `Titolo`, `Pegi`) VALUES
 (3, 'Cod', 18),
 (4, 'Wolfenstein', 18),
 (5, 'Half life', 18),
-(6, 'Monza', 3),
+(6, 'Monza F1', 3),
 (7, 'Rally', 12),
-(8, 'Abu Dabhi', 3),
-(9, 'Katar', 7),
-(10, 'Californi Speedway', 3),
+(8, 'Abu Dabhi F1', 3),
+(9, 'Qatar MotoGp', 7),
+(10, 'Nascar California', 3),
 (11, 'Pong', 3),
 (12, 'Space invaders', 3),
 (13, 'Pac-man', 3),
@@ -609,7 +627,7 @@ INSERT INTO `videogioco` (`Codice`, `Titolo`, `Pegi`) VALUES
 (15, 'Snake', 3),
 (16, 'Tabu', 12),
 (17, 'Moderno', 12),
-(18, 'QuizFilm', 12),
+(18, 'Film', 12),
 (19, 'Sapere e Potere', 12),
 (20, 'Trivia', 12);
 
@@ -655,7 +673,7 @@ CREATE TABLE `vista2` (
 --
 DROP TABLE IF EXISTS `vista1`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista1`  AS SELECT `p`.`cf` AS `cf`, `p`.`punti_totali` AS `punti_totali`, `p`.`occupazione` AS `occupazione`, `p`.`anno_nascita` AS `anno_nascita`, cast(avg(`s`.`punteggio`) as decimal(7,2)) AS `media_punteggio`, cast(avg(`s`.`sconto`) as decimal(5,2)) AS `media_sconto`, cast(avg(`s`.`spesa`) as decimal(5,2)) AS `media_spesa`, sum(`s`.`spesa`) AS `totale_spesa`, coalesce(`f`.`N_fps`,'0') AS `N_fps`, coalesce(`a`.`N_arcade`,'0') AS `N_arcade`, coalesce(`c`.`N_corsa`,'0') AS `N_corsa`, coalesce(`q`.`N_quiz`,'0') AS `N_quiz` FROM ((((((select `persona`.`CF` AS `cf`,`persona`.`Punti_totali` AS `punti_totali`,`persona`.`Occupazione` AS `occupazione`,`persona`.`Anno_nascita` AS `anno_nascita` from `persona`) `p` join (select `cronologia`.`Cf` AS `cf`,`cronologia`.`sconto` AS `sconto`,`cronologia`.`Punteggio` AS `punteggio`,`cronologia`.`spesa` AS `spesa` from `cronologia`) `s` on(`p`.`cf` = `s`.`cf`)) left join (select `vista2`.`cf` AS `cf`,count(0) AS `N_fps` from (`vista2` join `fps` on(`vista2`.`codice_videogioco` = `fps`.`Codice`)) group by `vista2`.`cf`) `f` on(`f`.`cf` = `p`.`cf`)) left join (select `vista2`.`cf` AS `cf`,count(0) AS `N_arcade` from (`vista2` join `arcade` on(`vista2`.`codice_videogioco` = `arcade`.`Codice`)) group by `vista2`.`cf`) `a` on(`a`.`cf` = `p`.`cf`)) left join (select `vista2`.`cf` AS `cf`,count(0) AS `N_corsa` from (`vista2` join `corsa` on(`vista2`.`codice_videogioco` = `corsa`.`Codice`)) group by `vista2`.`cf`) `c` on(`c`.`cf` = `p`.`cf`)) left join (select `vista2`.`cf` AS `cf`,count(0) AS `N_quiz` from (`vista2` join `quiz` on(`vista2`.`codice_videogioco` = `quiz`.`Codice`)) group by `vista2`.`cf`) `q` on(`q`.`cf` = `p`.`cf`)) GROUP BY `p`.`cf` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista1`  AS SELECT `p`.`cf` AS `cf`, `p`.`punti_totali` AS `punti_totali`, `p`.`occupazione` AS `occupazione`, `p`.`anno_nascita` AS `anno_nascita`, cast(avg(`s`.`punteggio`) as decimal(7,2)) AS `media_punteggio`, cast(avg(`s`.`sconto`) as decimal(5,2)) AS `media_sconto`, cast(avg(`s`.`spesa`) as decimal(5,2)) AS `media_spesa`, sum(`s`.`spesa`) AS `totale_spesa`, coalesce(`f`.`N_fps`,'0') AS `N_fps`, coalesce(`a`.`N_arcade`,'0') AS `N_arcade`, coalesce(`c`.`N_corsa`,'0') AS `N_corsa`, coalesce(`q`.`N_quiz`,'0') AS `N_quiz` FROM ((((((select `persona`.`CF` AS `cf`,`persona`.`Punti_totali` AS `punti_totali`,`persona`.`Occupazione` AS `occupazione`,`persona`.`Anno_nascita` AS `anno_nascita` from `persona`) `p` left join (select `cronologia`.`Cf` AS `cf`,`cronologia`.`sconto` AS `sconto`,`cronologia`.`Punteggio` AS `punteggio`,`cronologia`.`spesa` AS `spesa` from `cronologia`) `s` on(`p`.`cf` = `s`.`cf`)) left join (select `vista2`.`cf` AS `cf`,count(0) AS `N_fps` from (`vista2` join `fps` on(`vista2`.`codice_videogioco` = `fps`.`Codice`)) group by `vista2`.`cf`) `f` on(`f`.`cf` = `p`.`cf`)) left join (select `vista2`.`cf` AS `cf`,count(0) AS `N_arcade` from (`vista2` join `arcade` on(`vista2`.`codice_videogioco` = `arcade`.`Codice`)) group by `vista2`.`cf`) `a` on(`a`.`cf` = `p`.`cf`)) left join (select `vista2`.`cf` AS `cf`,count(0) AS `N_corsa` from (`vista2` join `corsa` on(`vista2`.`codice_videogioco` = `corsa`.`Codice`)) group by `vista2`.`cf`) `c` on(`c`.`cf` = `p`.`cf`)) left join (select `vista2`.`cf` AS `cf`,count(0) AS `N_quiz` from (`vista2` join `quiz` on(`vista2`.`codice_videogioco` = `quiz`.`Codice`)) group by `vista2`.`cf`) `q` on(`q`.`cf` = `p`.`cf`)) GROUP BY `p`.`cf` ;
 
 -- --------------------------------------------------------
 

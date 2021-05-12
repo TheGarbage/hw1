@@ -4,7 +4,7 @@
         require('db-config.php');
         $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
         if(!$conn)
-            $responso = "<p class='errore'> Errore connessione database, riprovare </p>";
+            $responso = "<p class='errore'> Errore connessione database utente, riprovare </p>";
         else{
             $username = mysqli_real_escape_string($conn, $_SESSION["userNameLudoteca"]);
             $query = "SELECT ((SELECT count(*) FROM vista1)-(SELECT count(*) FROM vista1 v2 WHERE v1.punti_totali > v2.punti_totali AND v1.cf<>v2.cf)) AS posizione,  v1.cf, v1.punti_totali, year(v1.anno_nascita), v1.media_punteggio, v1.media_sconto
@@ -73,7 +73,7 @@
             require ('db-config.php');
             $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
             if(!$conn){
-                echo "<p class='errore'> Errore connessione database, riprovare </p>";
+                echo "<p class='errore'> Errore connessione database generale, riprovare </p>";
                 exit;
             }
             $query = "CALL proc2(100)";
