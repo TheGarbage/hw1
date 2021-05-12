@@ -42,15 +42,15 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Login_Ludoteca</title>
+        <title>Ludoteca_Login</title>
         <link rel="stylesheet" href="stile-login.css">
         <link rel="stylesheet" href="stile-principale.css">
         <script src="script-login.js" defer></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet"> <!-- cancalla se non ti serve -->
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet"> <!-- cancalla se non ti serve -->
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital@1&display=swap" rel="stylesheet"> <!-- cancalla se non ti serve -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital@1&display=swap" rel="stylesheet"> 
     </head>
     <body>  
         <main>

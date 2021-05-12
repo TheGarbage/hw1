@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 07, 2021 alle 13:37
+-- Creato il: Mag 12, 2021 alle 15:31
 -- Versione del server: 10.4.14-MariaDB
 -- Versione PHP: 7.4.11
 
@@ -87,7 +87,7 @@ Insert into temp
 Select (tot-(select count(*) from vista1 v2 where v1.punti_totali > v2.punti_totali and v1.cf<>v2.cf))  as posizione,  v1.cf, v1.punti_totali,  v1.occupazione, v1.anno_nascita, v1.media_punteggio, v1.media_sconto, v1.media_spesa, v1.totale_spesa, v1.N_fps, v1.N_arcade, v1.N_corsa, v1.N_quiz
 From vista1 v1
 Order by posizione;
-Select posizione, cf, punti_totali from temp where posizione<=numero;
+Select posizione, cf, year(anno_nascita) as anno_nascita, media_punteggio, media_sconto, punti_totali from temp where posizione<=numero;
 End$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc3` (IN `codice_scheda` INT, IN `punteggio` INT)  Begin 

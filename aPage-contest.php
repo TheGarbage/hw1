@@ -27,7 +27,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>mhw3_Ludoteca</title>
+        <title>Ludoteca_contest</title>
         <link rel="stylesheet" href="stile-principale.css">
         <link rel="stylesheet" href="stile-contest.css">
         <script src="script-menuMobile.js" defer></script>
@@ -53,7 +53,12 @@
                 <a id="login" href= <?php echo (isset($_SESSION["userNameLudoteca"])) ?  "aPage-infoProfilo.php" : "aPage-login.php?urlChiamata=aPage-contest.php"; ?>>
                                     <?php echo (isset($_SESSION["userNameLudoteca"])) ? "Ciao ".$_SESSION["userNameLudoteca"].'!' : "Login"; ?></a>
                 </br>
-                <nav> <a href="aPage-home.php">Home</a> <a>Eventi</a> <a>Classifica</a> <a>Contatti</a> </nav>
+                <nav> 
+                    <a href="aPage-home.php">Home</a> 
+                    <a>Eventi</a> 
+                    <a href="aPage-classifica.php">Classifica</a> 
+                    <a>Contatti</a> 
+                </nav>
             </section>
             <div class="overlay"></div>
         </header>

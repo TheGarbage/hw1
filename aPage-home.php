@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>mhw1_Ludoteca</title>
+        <title>Ludoteca_home</title>
         <link rel="stylesheet" href="stile-principale.css">
         <script src=<?php echo (isset($_SESSION["userNameLudoteca"])) ?  "script-homeLoggato.js" : "script-home.js"; ?> defer></script>
         <script src="script-api-banner.js" defer></script>
@@ -30,7 +30,11 @@
                 <a id="login" href= <?php echo (isset($_SESSION["userNameLudoteca"])) ?  "aPage-infoProfilo.php" : "aPage-login.php"; ?>>
                                     <?php echo (isset($_SESSION["userNameLudoteca"])) ? "Ciao ".$_SESSION["userNameLudoteca"].'!' : "Login"; ?></a>
                 </br>
-                <nav> <a>Eventi</a> <a>Classifica</a> <a>Contatti</a> </nav>
+                <nav>   
+                    <a>Eventi</a> 
+                    <a href="aPage-classifica.php">Classifica</a> 
+                    <a>Contatti</a> 
+                </nav>
             </section>
             <div class="overlay"></div>
         </header>
