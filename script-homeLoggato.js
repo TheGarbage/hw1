@@ -1,11 +1,19 @@
 //FETCH DATABASE -------------------------------------------------------------------------------------------------------------------------------------------------------
 function onJsonVideogiochi(giochiJSon){
     let indice;
-    for(let id in index){
+    for(let id in index)
         if(giochiJSon[0]['categoriaRisultati'] === index[id])
             indice = id;
-    }
     const sottoSito = document.querySelector(".sotto-siti [data-tema=" + indice + ']');
+    if(giochiJSon[1]['risposta'] !== undefined){
+        const errore = document.createElement('p');
+        errore.textContent = giochiJSon[1]['risposta'];
+        errore.classList.add('errore');
+        sottoSito.appendChild(errore);
+        return;
+    }
+    let apertoOra = false;
+    if(giochiAperti.length === 0) apertoOra = true;
     const preferiti = sottoSito.querySelector(".preferiti");
     const divPreferiti = preferiti.querySelector(".giochi");
     const nonPreferiti = sottoSito.querySelector(".nonPreferiti");
@@ -24,27 +32,30 @@ function onJsonVideogiochi(giochiJSon){
         const divGioco = document.createElement('div');
         noClick.appendChild(divGioco);
         const stella = document.createElement('img');
-        stella.src = "Imm-Stella.jpg";
+        stella.src = "Immagini/Stella.jpg";
         stella.classList.add('stella');
         divGioco.appendChild(stella);
         const nomeGioco = document.createElement('h5');
         nomeGioco.textContent = item['titolo'];
-        const giocoAperto= {};
-        giocoAperto.gioco = gioco;
-        giocoAperto.lista = [];
-        for(lettera of nomeGioco.textContent.toUpperCase())
-            giocoAperto.lista.unshift(lettera);
-        giochiAperti.unshift(giocoAperto);
+        if(apertoOra){
+            const giocoAperto= {};
+            giocoAperto.gioco = gioco;
+            giocoAperto.lista = [];
+            for(lettera of nomeGioco.textContent.toUpperCase())
+                giocoAperto.lista.unshift(lettera);
+            giochiAperti.unshift(giocoAperto);
+        }
         divGioco.appendChild(nomeGioco);
         const imgPreferiti = document.createElement('img');
         imgPreferiti.classList.add('pointer');
         imgPreferiti.classList.add('stellaPiu');
         imgPreferiti.dataset.codice = item['codice'];
-        imgPreferiti.src = "Imm-NonPreferito.jpg";
-        imgPreferiti.addEventListener("click", inserisciPreferiti);
+        imgPreferiti.src = "Immagini/NonPreferito.jpg";
+        if(errorePreferiti === undefined)
+            imgPreferiti.addEventListener("click", inserisciPreferiti);
         divGioco.appendChild(imgPreferiti);
         const imgGioco = document.createElement('img');
-        imgGioco.src = "Imm-" + item.categoria + item.titolo + ".jpg";
+        imgGioco.src = "Immagini/" + item.titolo + ".jpg";
         imgGioco.dataset.imgGioco = true;
         noClick.appendChild(imgGioco);
         const cliccaQui = document.createElement('p');
@@ -78,8 +89,14 @@ function esitoModifica(json){
 }
 
 function onJsonPreferiti(preferiti){
-    for(item of preferiti)
-        giochiPreferiti.unshift(item);
+    if(preferiti['risposta'] === undefined)
+        for(item of preferiti)
+            giochiPreferiti.unshift(item);
+    else{
+        errorePreferiti = document.createElement('p');
+        errorePreferiti.textContent = preferiti['risposta'];
+        errorePreferiti.classList.add('errore');
+    }
 }
 
 function onResponse(response){
@@ -143,7 +160,7 @@ function creaPreferito(blocco, codice){
     const imgPreferiti = document.createElement('img');
     imgPreferiti.classList.add("pointer");
     imgPreferiti.dataset.codice = codice;
-    imgPreferiti.src = "Imm-Preferito.jpg";
+    imgPreferiti.src = "Immagini/Preferito.jpg";
     imgPreferiti.addEventListener("click", togliPreferiti);
     div.appendChild(imgPreferiti);
     return giocoPreferito;
@@ -161,7 +178,7 @@ function creaSottoSito(blocco){
     const imgTornaIndietro = document.createElement('img');
     imgTornaIndietro.classList.add('pointer');
     imgTornaIndietro.classList.add('tornaIndietro');
-    imgTornaIndietro.src = "Imm-TornaIndietro.jpg";
+    imgTornaIndietro.src = "Immagini/TornaIndietro.jpg";
     imgTornaIndietro.addEventListener('click', chiudiSottoSito);
     header.appendChild(imgTornaIndietro);
     const titoloHeader = document.createElement('h4');
@@ -188,6 +205,8 @@ function creaSottoSito(blocco){
     const divPreferiti = document.createElement('div');
     divPreferiti.classList.add('giochi');
     preferiti.appendChild(divPreferiti);
+    if(errorePreferiti !== undefined)
+        newSottoSito.appendChild(errorePreferiti.cloneNode(true));
     const nonPreferiti = document.createElement('section');
     nonPreferiti.classList.add('nonPreferiti');
     newSottoSito.appendChild(nonPreferiti);
@@ -319,7 +338,7 @@ function apriSottoSito(event){
         }
     }
     else 
-        sottoSito = creaSottoSito(blocco);
+        creaSottoSito(blocco);
     const elementiSito = document.querySelectorAll('.sito-principale');
     for(item of elementiSito)
         item.classList.add('opacity');
@@ -391,6 +410,7 @@ const index = {
 let giochiAperti = [];
 let vecchiaValue = '';
 const giochiPreferiti = [];
+let errorePreferiti;
 fetch("server-preferitiLettura.php").then(onResponse).then(onJsonPreferiti);
 const blocchi = document.querySelectorAll('#blocchi .blocco');
 for (const blocco of blocchi){

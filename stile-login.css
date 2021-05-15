@@ -1,7 +1,7 @@
 /*GENERALI----------------------------------------------------------------------------------*/
 body{
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -14,6 +14,7 @@ main{
     border-radius: 20px;
     padding: 10px;
     border: 2px solid rgba(255, 255, 255, .8);
+    margin-top: 50px;
 }
 
 form{
@@ -62,16 +63,16 @@ input[name="privacy"]{
 }
 
 /*ERRORI----------------------------------------------------------------------------------*/
-p.errore{
+p.erroreL{
     color: rgba(255, 0, 0, .9);
     margin-top: 20px; 
 }
 
-label.errore input{
+label.erroreL input{
     border-color: rgba(255, 0, 0, .9);
 }
 
-#privacy.errore{
+#privacy.erroreL{
     color: rgba(255, 0, 0, .9);
 }
 

@@ -1,10 +1,10 @@
 //FETCH DATABASE ---------------------------------------------------------------------------------------------------------------------------------------------------------
 function rispostaDataBase(json){
     const responso = document.querySelector('#responso');
-    if(json.risposta === "ok")
-        responso.classList.remove('hidden');
-    else 
+    if(json.risposta !== "ok"){
         responso.textContent = json.risposta;
+        responso.classList.add('errore');
+    }  
     responso.classList.remove('hidden');
 }
 
@@ -45,6 +45,14 @@ function seleziona(event){
 //REST API -------------------------------------------------------------------------------------------------------------------------------------------------------
 function onJsonGiochi(giochi){
     const sezioneGiochi = document.querySelector('#giochiForm');
+    if(giochi.risposta !== undefined){
+        document.querySelector('#contestVideogiochi').remove();
+        document.querySelector('#giochiForm').remove();
+        responso.textContent = giochi.risposta;
+        responso.classList.add('errore');
+        responso.classList.remove('hidden');
+        return;
+    }
     for(item of giochi.results){
         if(item.short_screenshots[0] !== undefined){
             const gioco = document.createElement('div');

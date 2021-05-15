@@ -57,8 +57,7 @@
                 </br>
                 <nav>   
                     <a href="aPage-home.php">Home</a> 
-                    <a>Eventi</a> 
-                    <a href="aPage-classifica.php">Classifica</a> 
+                    <a href="aPage-eventi.php">Eventi</a> 
                     <a>Contatti</a> 
                 </nav>
             </section>

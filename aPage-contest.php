@@ -19,7 +19,7 @@
         if(mysqli_num_rows($res) > 0){
             $rispostaDatabase = mysqli_fetch_assoc($res);
             mysqli_free_result($res);
-            $errore = "Grazie per aver partecipato! </br> Hai selezionato: ".$rispostaDatabase['Nome_videogioco'];
+            $responso = "Grazie per aver partecipato! </br> Hai selezionato: ".$rispostaDatabase['Nome_videogioco'];
         }
     }
 ?>
@@ -31,7 +31,7 @@
         <link rel="stylesheet" href="stile-principale.css">
         <link rel="stylesheet" href="stile-contest.css">
         <script src="script-menuMobile.js" defer></script>
-        <?php if(isset($_SESSION["userNameLudoteca"])) echo "<script src='script-api-contest.js' defer></script>" ?>
+        <?php if(isset($_SESSION["userNameLudoteca"]) && !isset($errore) && !isset($responso)) echo "<script src='script-api-contest.js' defer></script>" ?>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
@@ -72,7 +72,8 @@
             </p>
         </section>
         <?php 
-            if(isset($errore)) echo "<p id='responso'>".$errore."</p>"; 
+            if(isset($errore)) echo "<p id='responso' class='errore'>".$errore."</p>"; 
+            else if (isset($responso)) echo "<p id='responso'>".$responso."</p>"; 
             else echo (isset($_SESSION["userNameLudoteca"])) ?
                 "<form id='contestVideogiochi'>
                     <input type='text' id='barraRicerca' class='barraInput' value='Cerca i tuoi giochi:'>

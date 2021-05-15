@@ -25,7 +25,7 @@ body{
 /*HEADER----------------------------------------------------------------------------------*/
 #header-sito{
     height: 200px;
-    background-image: url(Imm-Home.jpg);
+    background-image: url(Immagini/Home.jpg);
     background-size: cover;
     background-position: top;
     display: flex;
@@ -479,23 +479,23 @@ body{
 }
 
 [data-tema='Fps']{
-    background-image: url(Imm-Fps.jpg);
+    background-image: url(Immagini/Fps.jpg);
 }
 
 [data-tema='Arcade']{
-    background-image: url(Imm-Arcade.jpg);
+    background-image: url(Immagini/Arcade.jpg);
 }
 
 [data-tema='VediTutto']{
-    background-image: url(Imm-vediTutto.jpg);
+    background-image: url(Immagini/vediTutto.jpg);
 }
 
 [data-tema='Corsa']{
-    background-image: url(Imm-Corsa.jpg);
+    background-image: url(Immagini/Corsa.jpg);
 }
 
 [data-tema='Quiz']{
-    background-image: url(Imm-Quiz.jpg);
+    background-image: url(Immagini/Quiz.jpg);
 }
 
 .blocco{
@@ -528,6 +528,15 @@ body{
     justify-content: center;
 }
 
+
+/*ERRORE ---------------------------------------------------------------------------------*/
+.errore{
+    font-size: 1.2rem;
+    width: fit-content;
+    margin: 40px auto;
+    color: red;
+}
+
 /*FOOTER----------------------------------------------------------------------------------*/
 
 #distanziatore{
@@ -542,7 +551,7 @@ body{
 
 footer{
     height: 50px;
-    background-image: url(Imm-Home.jpg);
+    background-image: url(Immagini/Home.jpg);
     background-size: cover;
     background-position: bottom;
     position: relative;

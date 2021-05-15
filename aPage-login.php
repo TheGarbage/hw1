@@ -43,8 +43,8 @@
     <head>
         <meta charset="utf-8">
         <title>Ludoteca_Login</title>
-        <link rel="stylesheet" href="stile-login.css">
         <link rel="stylesheet" href="stile-principale.css">
+        <link rel="stylesheet" href="stile-login.css">
         <script src="script-login.js" defer></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -56,14 +56,14 @@
         <main>
             <form name="login" method="post"> 
                 <h2>Bentornato</h2>
-                <label <?php if(isset($errore) && ($errore === "Credenziali non valide" || empty($_POST["userName"]))) echo "class=errore"?>
+                <label <?php if(isset($errore) && ($errore === "Credenziali non valide" || empty($_POST["userName"]))) echo "class=erroreL"?>
                     >Username: <input type="text" name="userName" class='barraInput' data-max="20"<?php if(!empty($_POST["userName"])) echo "value=".$_POST["userName"]?>></label>
-                <label <?php if(isset($errore) && ($errore === "Credenziali non valide" || empty($_POST["passWord"]))) echo "class=errore"?>
+                <label <?php if(isset($errore) && ($errore === "Credenziali non valide" || empty($_POST["passWord"]))) echo "class=erroreL"?>
                     >Password: <input type="password" name="passWord" class='barraInput'<?php if(!empty($_POST["passWord"])) echo "value=".$_POST["passWord"]?>></label>
                 <label>&nbsp<input type='submit' class="submit"></label>
                 <p class="pointer">Se non hai un account registrati!</p>
             </form>
         </main>
-        <p class='errore'><?php if(isset($errore)) echo  $errore; ?></p>
+        <p class='erroreL'><?php if(isset($errore)) echo  $errore; ?></p>
     </body>
 </html>

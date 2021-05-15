@@ -1,11 +1,19 @@
 //FETCH DATABASE -------------------------------------------------------------------------------------------------------------------------------------------------------
 function onJsonVideogiochi(giochiJSon){
     let indice;
-    for(let id in index){
+    for(let id in index)
         if(giochiJSon[0]['categoriaRisultati'] === index[id])
             indice = id;
-    }
     const sottoSito = document.querySelector(".sotto-siti [data-tema=" + indice + ']');
+    if(giochiJSon[1]['risposta'] !== undefined){
+        const errore = document.createElement('p');
+        errore.textContent = giochiJSon[1]['risposta'];
+        errore.classList.add('errore');
+        sottoSito.appendChild(errore);
+        return;
+    }
+    let apertoOra = false;
+    if(giochiAperti.length === 0) apertoOra = true;
     const nonPreferiti = sottoSito.querySelector(".nonPreferiti");
     const divNonPreferiti = nonPreferiti.querySelector(".giochi");
     const inputCerca = sottoSito.querySelector('input'); 
@@ -23,15 +31,17 @@ function onJsonVideogiochi(giochiJSon){
         noClick.appendChild(divGioco);
         const nomeGioco = document.createElement('h5');
         nomeGioco.textContent = item['titolo'];
-        const giocoAperto= {};
-        giocoAperto.gioco = gioco;
-        giocoAperto.lista = [];
-        for(lettera of nomeGioco.textContent.toUpperCase())
-            giocoAperto.lista.unshift(lettera);
-        giochiAperti.unshift(giocoAperto);
+        if(apertoOra){
+            const giocoAperto= {};
+            giocoAperto.gioco = gioco;
+            giocoAperto.lista = [];
+            for(lettera of nomeGioco.textContent.toUpperCase())
+                giocoAperto.lista.unshift(lettera);
+            giochiAperti.unshift(giocoAperto);
+        }
         divGioco.appendChild(nomeGioco);
         const imgGioco = document.createElement('img');
-        imgGioco.src = "Imm-" + item.categoria + item.titolo + ".jpg";
+        imgGioco.src = "Immagini/" + item.titolo + ".jpg";
         imgGioco.dataset.imgGioco = true;
         noClick.appendChild(imgGioco);
         const cliccaQui = document.createElement('p');
@@ -107,7 +117,7 @@ function creaSottoSito(blocco){
     const imgTornaIndietro = document.createElement('img');
     imgTornaIndietro.classList.add('pointer');
     imgTornaIndietro.classList.add('tornaIndietro');
-    imgTornaIndietro.src = "Imm-TornaIndietro.jpg";
+    imgTornaIndietro.src = "Immagini/TornaIndietro.jpg";
     imgTornaIndietro.addEventListener('click', chiudiSottoSito);
     header.appendChild(imgTornaIndietro);
     const titoloHeader = document.createElement('h4');

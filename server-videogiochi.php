@@ -1,12 +1,12 @@
 <?php 
     if(!isset($_GET['categoria']) || ($_GET['categoria'] !== "Fps" && $_GET['categoria'] !== "Arcade" && $_GET['categoria'] !== "Quiz" && 
        $_GET['categoria'] !== "Corsa" && $_GET['categoria'] !== "VediTutto")) 
-            echo json_encode(array('risposta' => "Errore get, riprovare"));
+            echo json_encode(array(array('categoriaRisultati' => $_GET['categoria']), array('risposta' => "Errore get, riprovare")));
     else{
         require ('db-config.php');
         $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
         if(!$conn){
-            echo json_encode(array('risposta' => "Errore connessione database, riprovare"));
+            echo json_encode(array(array('categoriaRisultati' => $_GET['categoria']), array('risposta' => "Errore connessione database, riprovare")));
             exit;
         }
         $categoria = mysqli_real_escape_string($conn, $_GET["categoria"]);
@@ -32,25 +32,25 @@
                     $videogiochi[] = array('titolo' => $row['Titolo'],
                                            'categoria' => "Fps",
                                            'codice' => $row['Codice'],
-                                           'descrizione' => "Record-Uccisioni: ".$row['Record_uccisioni_partita']."</br>Genere: ".$row['Genere']);
+                                           'descrizione' => "Pegi: ".$row['Pegi']."</br>Record-Uccisioni: ".$row['Record_uccisioni_partita']."</br>Genere: ".$row['Genere']);
                 }
                 else if(isset($row['Record_punteggio']) && $row['Record_punteggio'] != null){
                     $videogiochi[] = array('titolo' => $row['Titolo'],
                                            'categoria' => "Arcade",
                                            'codice' => $row['Codice'],
-                                           'descrizione' => "Record-punteggio: ".$row['Record_punteggio']);
+                                           'descrizione' => "Pegi: ".$row['Pegi']."</br>Record-punti: ".$row['Record_punteggio']);
                 }
                 else if(isset($row['Tipo_gara']) && $row['Tipo_gara'] != null && isset($row['Tempo_record']) && $row['Tempo_record'] != null){
                     $videogiochi[] = array('titolo' => $row['Titolo'],
                                            'categoria' => "Corsa",
                                            'codice' => $row['Codice'],
-                                           'descrizione' => "Tempo-record: ".$row['Tempo_record']."</br>Tipo-gara: ".$row['Tipo_gara']);
+                                           'descrizione' => "Pegi: ".$row['Pegi']."</br>T-record: ".$row['Tempo_record']."</br>Tipo-gara: ".$row['Tipo_gara']);
                 }
                 else if(isset($row['Argomento']) && $row['Argomento'] != null && isset($row['N_domande']) && $row['N_domande'] != null){
                     $videogiochi[] = array('titolo' => $row['Titolo'],
                                            'categoria' => "Quiz",
                                            'codice' => $row['Codice'],
-                                           'descrizione' => "N_domande: ".$row['N_domande']."</br>Argomento: ".$row['Argomento']);
+                                           'descrizione' => "Pegi: ".$row['Pegi']."</br>N_domande: ".$row['N_domande']."</br>Argomento: ".$row['Argomento']);
                 }
             }
             $response[] = array('videogiochi' => $videogiochi);
