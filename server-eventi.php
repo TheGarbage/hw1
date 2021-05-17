@@ -1,6 +1,6 @@
 <?php 
     require ('db-config.php');
-    $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
+    $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']) or die(mysqli_error($conn));
     if(!$conn){
         echo json_encode(array('risposta' => "Errore connessione database, riprovare"));
         exit;

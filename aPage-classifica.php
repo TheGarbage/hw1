@@ -58,7 +58,7 @@
                 <nav>   
                     <a href="aPage-home.php">Home</a> 
                     <a href="aPage-eventi.php">Eventi</a> 
-                    <a>Contatti</a> 
+                    <a href="aPage-contatti.php">Contatti</a> 
                 </nav>
             </section>
             <div class="overlay"></div>
@@ -66,6 +66,12 @@
         <ul id="titolo">
             <li>Classifica</li>
         </ul>
+        <section id="descrizione">
+            <p>
+                Ecco i 100 giocatori che sono riusciti a conquistare più punti di tutti e quindi anche maggior sconto.
+                Bisogna avere almeno un punto per essere classificato. Lotta per rientrarci!
+            </p>
+        </section>
         <?php 
             if(isset($_SESSION["userNameLudoteca"])) 
                 echo $responso;

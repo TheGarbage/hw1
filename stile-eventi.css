@@ -1,3 +1,10 @@
+/*AVVISO NESSUN EVENTO----------------------------------------------------------------------------------*/
+main p{
+    margin: 0 auto;
+    width: fit-content;
+    font-size: 1.2em;
+}
+
 /*EVENTO----------------------------------------------------------------------------------*/
 .evento{
     margin: 50px auto;
@@ -69,7 +76,10 @@
 }
 
 /*MEDIA----------------------------------------------------------------------------------*/
-@media (max-width: 1000px){
+@media (max-width: 1650px){
+    #descrizione{
+        margin-bottom: 100px;
+    }
     .evento{
         height: 125px;
         font-size: 25px;

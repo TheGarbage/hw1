@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 12, 2021 alle 21:43
+-- Creato il: Mag 17, 2021 alle 12:52
 -- Versione del server: 10.4.18-MariaDB
 -- Versione PHP: 8.0.5
 
@@ -118,7 +118,7 @@ End$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc4` ()  Begin
 Update evento set concluso=1 where concluso=0 and  (inizio+interval durata_minuti minute) < current_timestamp();
-Select  e.Nome, g.Titolo, t.Modificatore_bonus, t.Modificatore_difficolta, 
+Select  e.Nome, g.Titolo, g.codice, t.Modificatore_bonus, t.Modificatore_difficolta, 
 Timediff((inizio+interval durata_minuti minute), current_timestamp()) as tempo_rimasto
 from evento e join tipo_evento t on e.nome=t.nome join videogioco g on e.videogioco=g.codice
 where concluso=0 order by tempo_rimasto;
@@ -164,7 +164,8 @@ CREATE TABLE `contest` (
 --
 
 INSERT INTO `contest` (`Cf`, `Nome_videogioco`) VALUES
-('bbc99', 'Grand Theft Auto V');
+('bbc99', 'Grand Theft Auto V'),
+('sylvia', 'Super Mario Odyssey');
 
 -- --------------------------------------------------------
 
@@ -276,7 +277,16 @@ CREATE TABLE `evento` (
 INSERT INTO `evento` (`Inizio`, `Nome`, `Videogioco`, `Concluso`, `Durata_minuti`) VALUES
 ('2020-12-18 12:39:12', 'bonus 1_5x', 1, 1, 30),
 ('2020-12-18 13:11:26', 'brutale 3x', 1, 1, 120),
-('2020-12-22 11:00:52', 'bonus 2x', 10, 0, 5);
+('2020-12-22 11:00:52', 'bonus 2x', 10, 1, 5),
+('2021-05-15 10:07:30', 'Bonus 2x', 10, 1, 80),
+('2021-05-15 11:37:46', 'Bonus 2x', 1, 1, 80),
+('2021-05-15 11:38:46', 'Brutale 5x', 3, 1, 400),
+('2021-05-15 14:37:16', 'bonus 1_5x', 12, 1, 300),
+('2021-05-16 11:06:24', 'Bonus 2x', 18, 1, 80),
+('2021-05-16 11:07:45', 'Bonus 2x', 7, 1, 80),
+('2021-05-16 11:07:48', 'Bonus 2x', 1, 1, 80),
+('2021-05-16 11:07:52', 'Bonus 2x', 4, 1, 80),
+('2021-05-17 11:38:30', 'Bonus 2x', 3, 0, 100);
 
 -- --------------------------------------------------------
 
@@ -342,7 +352,9 @@ INSERT INTO `persona` (`CF`, `Password`, `Nome`, `Anno_nascita`, `Occupazione`, 
 ('llpc01', '$2y$10$nl6xA2Y5rDc5IoZZuTOaZen1QVSoJefBa5A3Sr1XgXHaHOQ2nBPt.', 'Paola Gullotta', '1995-09-11', 'Dentista', 75),
 ('lmn98', '$2y$10$MCilTHlrwfDDz8VyYxPhtu2vwcdrlQ07jj0xcOT0NBj7W1/fIoBT.', 'Fancesco Fichera', '1998-03-22', 'youtuber', 185),
 ('mcr77', '$2y$10$ScW5j9ug3ZFVkwDMYdkzwOWSdsGIGV9OsxEPxaif3.BgClKtYzDpe', 'Guglielmo Cantone', '1965-08-16', 'Imprenditore', 511),
+('sylvia', '$2y$10$Zm6U2DkUSH.LFImqbNW7neKOk98caq7AzBqghNhz85CSJKwyENI8y', 'francesca corrao', '1999-07-08', 'studente', 0),
 ('TheGarbage', '$2y$10$KhRBmOlrlBKHUTZa.6sOR.Xdj55eytZD5FZHIA7RUdY6aXseLn9f.', 'Davide Bucchieri', '1999-05-27', 'studente', 0),
+('williamGlasso', '$2y$10$3bR19oxP9au8Ap/yw.auX.kIfNUNcEcYhJa.NK.xrpda.6BGXydtG', 'a', '2001-11-11', '1', 0),
 ('yuv7', '$2y$10$8bmkQpnW2OAX.jyNnOaxMO2l7PknemFxvj6Qd2996Y27fbjKpedXC', 'Paola Valenti', '1969-09-11', 'Architetto', 110);
 
 -- --------------------------------------------------------
@@ -396,9 +408,8 @@ CREATE TABLE `preferiti` (
 
 INSERT INTO `preferiti` (`Codice_videogioco`, `cf`) VALUES
 (1, 'bbc99'),
-(2, 'bbc99'),
-(5, 'bbc99'),
-(10, 'bbc99');
+(10, 'bbc99'),
+(11, 'bbc99');
 
 -- --------------------------------------------------------
 

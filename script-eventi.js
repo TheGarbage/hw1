@@ -28,6 +28,21 @@ function creaEvento(evento){
     div1.appendChild(descrizione);
 }
 
+function creaEventi(eventi){
+    const info = document.createElement('p');
+    if(eventi.length !== 0){
+        info.textContent = "Eventi attualmente attivi";
+        for(evento of eventi)
+            creaEvento(evento);
+        window.setTimeout("togliSecondo()", 1000);  
+    }
+    else{
+        info.textContent = "Non sono presenti attivi al momento";
+        window.setTimeout("controllaVuoto()", 60000);
+    }
+    main.appendChild(info);
+}
+
 //GESTIONE TEMPO -------------------------------------------------------------------------------------------------------------------------------------------------------
 function togliSecondo(){
     const eventi = document.querySelectorAll('.evento');
@@ -49,6 +64,11 @@ function togliSecondo(){
     window.setTimeout("togliSecondo()", 1000);
 }
 
+function controllaVuoto(){
+    main.innerHTML = '';
+    fetch("server-eventi.php").then(onResponse).then(stampa);
+}
+
 //FUNZIONI FETCH -------------------------------------------------------------------------------------------------------------------------------------------------------
 function stampaDiNuovo(json){
     if(json['risposta'] !== undefined){
@@ -61,9 +81,7 @@ function stampaDiNuovo(json){
     }
     else{
         main.innerHTML = '';
-        for(item of json)
-            creaEvento(item);
-        window.setTimeout("togliSecondo()", 1000);
+        creaEventi(json);
     }
 }
 
@@ -74,11 +92,8 @@ function stampa(json){
         errore.classList.add('errore');
         main.appendChild(errore);
     }
-    else{
-        for(item of json)
-            creaEvento(item);
-        }
-        window.setTimeout("togliSecondo()", 1000);
+    else
+        creaEventi(json);
 }
 
 function onResponse(response){

@@ -1,0 +1,14 @@
+/*CAMBI DESCRIZIONE----------------------------------------------------------------------------------*/
+#descrizione{
+    margin-bottom: 0px;
+}
+
+#descrizione p{
+    line-height: 1.5rem;
+    padding: 8px;
+}
+
+/*CAMBI DISTANZIATORE----------------------------------------------------------------------------------*/
+#distanziatore{
+    height: 200px;
+}

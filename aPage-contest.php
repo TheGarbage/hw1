@@ -55,9 +55,9 @@
                 </br>
                 <nav> 
                     <a href="aPage-home.php">Home</a> 
-                    <a>Eventi</a> 
+                    <a href="aPage-eventi.php">Eventi</a> 
                     <a href="aPage-classifica.php">Classifica</a> 
-                    <a>Contatti</a> 
+                    <a href="aPage-contatti.php">Contatti</a> 
                 </nav>
             </section>
             <div class="overlay"></div>
@@ -66,9 +66,10 @@
             <li>Contest lockdown</li>
         </ul>
         <section id="descrizione">
-            <p>Abbiamo passato l'ultimo anno chiusi in casa. Quando potremo tornare alla nostra vita quotidiana abbiamo pensato di 
-               festeggiare le cosa con un nuovo gioco a tema scelto da voi. Indicateci il vostro gioco preferito o quello che vi ha salvato dalla
-               routine post-covid e il più selezionato vincerà il contest.
+            <p>
+                Abbiamo passato l'ultimo anno chiusi in casa. Quando potremo tornare alla nostra vita quotidiana abbiamo pensato di 
+                festeggiare le cosa con un nuovo gioco a tema scelto da voi. Indicateci il vostro gioco preferito o quello che vi ha salvato dalla
+                routine post-covid e il più selezionato vincerà il contest.
             </p>
         </section>
         <?php 

@@ -33,18 +33,19 @@
                 <nav>   
                     <a href="aPage-eventi.php">Eventi</a>
                     <a href="aPage-classifica.php">Classifica</a> 
-                    <a>Contatti</a> 
+                    <a href="aPage-contatti.php">Contatti</a> 
                 </nav>
             </section>
             <div class="overlay"></div>
         </header>
         <section id="alertNonCreato" class="sito-principale"></section> 
         <section id="descrizione" class="sito-principale">
-            <p>Gioca a centinaia di giochi e fai più punti possibili per avere sconti sempre più grandi. Diventa nostro cliente per essere sempre aggiornato sulle novità
+            <p>
+                Gioca a centinaia di giochi e fai più punti possibili per avere sconti sempre più grandi. Diventa nostro cliente per essere sempre aggiornato sulle novità
                 ed entrare nella nostra classifica ufficiale. Dicci quali sono i tuoi giochi preferiti e ti metteremo in evidenzia tutti gli eventi che li riguardano
                 cosi che non ti perderai nulla. Dimostra a tutti fino a dove può arrivare il tuo lato nerd!
             </p>
-            <a>Scopri di più</a>
+            <a href="aPage-scopriDiPiu.php">Scopri di più</a>
         </section>
         <div class="sotto-siti"></div>
         <section id="blocchi">
