@@ -2,11 +2,7 @@
     session_start();
     if(isset($_SESSION["userNameLudoteca"])){
         require ('db-config.php');
-        $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
-        if(!$conn){
-            echo json_encode(array('risposta' => "Errore connessione database preferiti, riprovare"));
-            exit;
-        }
+        $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']) or die(mysqli_error($conn));
         $username = mysqli_real_escape_string($conn, $_SESSION["userNameLudoteca"]);
         $query = "SELECT Codice_videogioco FROM preferiti WHERE cf='".$username."'";
         $res = mysqli_query($conn, $query);

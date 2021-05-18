@@ -8,11 +8,7 @@
             echo json_encode(array('risposta' => "Errore formattazione, riprovare"));
     else{
         require ('db-config.php');
-        $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
-        if(!$conn){
-            echo json_encode(array('risposta' => "Errore connessione database, riprovare"));
-            exit;
-        }
+        $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']) or die(mysqli_error($conn));
         $username = mysqli_real_escape_string($conn, $_POST["userName"]);
         $query = "SELECT cf FROM persona WHERE cf = '".$username."'";
         $res = mysqli_query($conn, $query);

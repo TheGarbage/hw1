@@ -4,11 +4,7 @@
             echo json_encode(array(array('categoriaRisultati' => $_GET['categoria']), array('risposta' => "Errore get, riprovare")));
     else{
         require ('db-config.php');
-        $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
-        if(!$conn){
-            echo json_encode(array(array('categoriaRisultati' => $_GET['categoria']), array('risposta' => "Errore connessione database, riprovare")));
-            exit;
-        }
+        $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']) or die(mysqli_error($conn));
         $categoria = mysqli_real_escape_string($conn, $_GET["categoria"]);
         if($_GET['categoria'] !== "VediTutto")
             $query = "SELECT * FROM videogioco v JOIN ".$_GET['categoria']." c ON (v.codice=c.codice)";
