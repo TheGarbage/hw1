@@ -31,6 +31,7 @@
                                     <?php echo (isset($_SESSION["userNameLudoteca"])) ? "Ciao ".$_SESSION["userNameLudoteca"].'!' : "Login"; ?></a>
                 </br>
                 <nav>   
+                    <a id="paginaAttuale">HOME</a>
                     <a href="aPage-eventi.php">Eventi</a>
                     <a href="aPage-classifica.php">Classifica</a> 
                     <a href="aPage-contatti.php">Contatti</a> 

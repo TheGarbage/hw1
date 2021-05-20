@@ -32,6 +32,7 @@
                 </br>
                 <nav> 
                     <a href="aPage-home.php">Home</a> 
+                    <a id="paginaAttuale">EVENTI</a>
                     <a href="aPage-classifica.php">Classifica</a> 
                     <a href="aPage-contatti.php">Contatti</a> 
                 </nav>

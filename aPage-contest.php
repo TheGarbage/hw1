@@ -3,23 +3,34 @@
     if(isset($_SESSION["userNameLudoteca"])){
         require('db-config.php');
         $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
-        if(!$conn){
+        if(!$conn)
             $errore = "Impossibile connettersi al server, riprovare";
-            exit;
-        }
-        $username = mysqli_real_escape_string($conn, $_SESSION['userNameLudoteca']);
-        $query = "SELECT * FROM contest WHERE cf = '".$username."'";
-        $res = mysqli_query($conn, $query);
-        if(!$res){
-            $errore = "Errore select, riprovare";
+        else{
+            $username = mysqli_real_escape_string($conn, $_SESSION['userNameLudoteca']);
+            $query = "SELECT * FROM contest WHERE cf = '".$username."'";
+            $res = mysqli_query($conn, $query);
             mysqli_close($conn);
-            exit;
-        }
-        mysqli_close($conn);
-        if(mysqli_num_rows($res) > 0){
-            $rispostaDatabase = mysqli_fetch_assoc($res);
-            mysqli_free_result($res);
-            $responso = "Grazie per aver partecipato! </br> Hai selezionato: ".$rispostaDatabase['Nome_videogioco'];
+            if(!$res)
+                $errore = "Errore select, riprovare";
+            else if(mysqli_num_rows($res) > 0){
+                $rispostaDatabase = mysqli_fetch_assoc($res);
+                mysqli_free_result($res);
+                if(isset($_GET['elimina']) && $_GET['elimina'] === "true"){
+                    $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
+                    if(!$conn)
+                        $errore = "Impossibile connettersi al server per l'eliminazione voto, riprovare";
+                    else{
+                        $query = "DELETE FROM contest WHERE CF='".$username."'";
+                        $res = mysqli_query($conn, $query);
+                        mysqli_close($conn);
+                        if(!$res)
+                            $errore = "Errore eliminazione, riprovare";
+                    }
+                }
+                else 
+                    $responso = "Grazie per aver partecipato! </br> Hai selezionato: ".$rispostaDatabase['Nome_videogioco']."
+                                </br></br><a href='aPage-contest.php?elimina=true'>Annulla voto</a>";
+            }
         }
     }
 ?>

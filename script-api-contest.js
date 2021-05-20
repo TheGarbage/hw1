@@ -12,7 +12,7 @@ function rispostaDataBase(json){
 function fineContest(event){
     const responso = document.querySelector('#responso');
     const giocoScelto = event.currentTarget.parentNode.querySelector('h5').textContent;
-    responso.innerHTML += giocoScelto;
+    responso.innerHTML += giocoScelto + "</br></br><a href='aPage-contest.php?elimina=true'>Annulla voto</a>";
     document.querySelector('#contestVideogiochi').remove();
     document.querySelector('#giochiForm').remove();
     fetch(

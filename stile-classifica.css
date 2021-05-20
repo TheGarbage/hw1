@@ -9,28 +9,3 @@
     line-height: 1.5rem;
 }
 
-/*TABELLE----------------------------------------------------------------------------------*/
-table {
-    border-collapse:collapse;
-    width: 80%;
-    margin: 60px auto;  
-    font-weight: bold;
-}
-
-/*TITOLI TABELLE----------------------------------------------------------------------------------*/
-caption{
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-}
-
-/*RIGHE E COLONNE----------------------------------------------------------------------------------*/
-td, th {
-    border: 1px solid rgba(145, 146, 177, .8);
-    padding: 8px;
-    font-weight: normal;
-    font-size: 0.65rem;
-}
-
-thead td, thead th{
-    font-size: 0.85rem;
-}

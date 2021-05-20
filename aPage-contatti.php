@@ -7,7 +7,6 @@
         <link rel="stylesheet" href="stile-principale.css">
         <link rel="stylesheet" href="stile-contatti.css">
         <script src="script-menuMobile.js" defer></script>
-        <?php if(isset($_SESSION["userNameLudoteca"])) echo "<script src='script-preferiti.js' defer></script>"; ?> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
@@ -33,6 +32,7 @@
                     <a href="aPage-home.php">Home</a> 
                     <a href="aPage-eventi.php">Eventi</a>
                     <a href="aPage-classifica.php">Classifica</a> 
+                    <a id="paginaAttuale">CONTATTI</a>
                 </nav>
             </section>
             <div class="overlay"></div>

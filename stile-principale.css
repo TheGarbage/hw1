@@ -72,8 +72,17 @@ body{
 }
 
 #menu nav a{
-    padding-left: 2%;
-    padding-right: 2%;
+    padding: 0px 4%;
+}
+
+#paginaAttuale{
+    cursor: default;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: rgba(255, 255, 255, .5);
+    color: rgba(17, 24, 40, .97);
+    font-weight: bold;
+    padding: 0px 6%;
 }
 
 /*MENU MOBILE----------------------------------------------------------------------------------*/
@@ -579,6 +588,12 @@ nav a:hover{
     background-color: rgba(255, 255, 255, .1);
 }
 
+#paginaAttuale:hover{
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-color: rgba(255, 255, 255, .5);
+}
+
 #contest a:hover{
     color: rgba(255, 0, 0, .5);
 }
@@ -658,6 +673,31 @@ nav a:hover{
 
 .barraInput:hover, .submit:hover{
     border-color: rgba(255, 255, 255, .8);
+}
+
+
+/*TABELLE----------------------------------------------------------------------------------*/
+table {
+    border-collapse:collapse;
+    width: 80%;
+    margin: 60px auto;  
+    font-weight: bold;
+}
+
+caption{
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+td, th {
+    border: 1px solid rgba(145, 146, 177, .8);
+    padding: 8px;
+    font-weight: normal;
+    font-size: 0.65rem;
+}
+
+thead td, thead th{
+    font-size: 0.85rem;
 }
 
 /*MEDIA----------------------------------------------------------------------------------*/
@@ -761,6 +801,14 @@ nav a:hover{
 
     #header-sito{
         height: 200px;
+    }
+
+    #paginaAttuale{
+        border-radius: 20px;
+    }
+
+    #paginaAttuale:hover{
+        border-radius: 20px;
     }
 
     #descrizione{

@@ -11,6 +11,7 @@
         <meta charset="utf-8">
         <title>Ludoteca_infoProfilo</title>
         <link rel="stylesheet" href="stile-principale.css">
+        <link rel="stylesheet" href="stile-infoProfilo.css">
         <script src="script-menuMobile.js" defer></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -28,7 +29,7 @@
                         <div class="mini-menu"></div>
                     </div>
             </section>
-            <h1>Ludoteca</h1>
+            <h1>Profilo</h1>
             <section id="menu">
                 <nav> 
                     <a href="aPage-home.php">Home</a> 
@@ -41,18 +42,15 @@
         </header>
         <section id="descrizione">
             <p>
-                Qui puoi vedere tutte le informazioni relative al tuo profilo!
+                <?php echo "Ciao ".$_SESSION["userNameLudoteca"].", Qui puoi vedere tutte le informazioni che non puoi vedere altrove!" ?>
             </p>
         </section>
         <ul id="titolo">
-            <li>Modifica profilo</li>
-            <li>Giochi preferiti</li>
-            <li>Posizione in classifica</li>
-            <li>Eventi giochi preferiti</li>
+            <li>Info generali</li>
             <li>Ultime 30 transazioni</li>
-            <li>Gioco più usato e categoria prederiti</li>
+            <li>Gioco più usato e categoria preferiti</li>
         </ul>
-        <a href="aPage-logout.php">Logout<a>
+        <a href="aPage-logout.php" id="logout">Logout<a>
         <div id="distanziatore"></div>
         <div id="footerConteiner">
             <footer> 
