@@ -1,8 +1,8 @@
 //FETCH DATABASE ---------------------------------------------------------------------------------------------------------------------------------------------------------
 function rispostaDataBase(json){
     const responso = document.querySelector('#responso');
-    if(json.risposta !== "ok"){
-        responso.textContent = json.risposta;
+    if(json['risposta'] !== "ok"){
+        responso.textContent = json['risposta'];
         responso.classList.add('errore');
     }  
     responso.classList.remove('hidden');
@@ -16,7 +16,7 @@ function fineContest(event){
     document.querySelector('#contestVideogiochi').remove();
     document.querySelector('#giochiForm').remove();
     fetch(
-        "server-contestFaseScelta.php?videogioco=" + encodeURI(giocoScelto)
+        "server-database.php?comando=sceltaContest&videogioco=" + encodeURI(giocoScelto)
     ).then(onResponse).then(rispostaDataBase);
 }
 

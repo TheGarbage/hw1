@@ -326,7 +326,7 @@ body{
     height: 60px;
     position: relative;
     margin: 5px;
-    width: calc(12% - 10px);
+    width: calc(16% - 10px);
 }
 
 .giocoPreferito img{

@@ -84,8 +84,8 @@ function onJsonVideogiochi(giochiJSon){
 }
 
 function esitoModifica(json){
-    if(json.risposta !== "ok")
-        alert(json.risposta);
+    if(json['risposta'] !== "ok")
+        alert(json['risposta']);
 }
 
 function onJsonPreferiti(preferiti){
@@ -238,7 +238,7 @@ function creaSottoSito(blocco){
 function inserisciPreferiti(event){  
     const codice = event.currentTarget.dataset.codice + "nonPreferito";
     giochiPreferiti.unshift(event.currentTarget.dataset.codice);
-    fetch("server-preferitiInserimento.php?codice=" + event.currentTarget.dataset.codice).then(onResponse).then(esitoModifica);
+    fetch("server-database.php?comando=inserimentoPreferiti&codice=" + event.currentTarget.dataset.codice).then(onResponse).then(esitoModifica);
     const giochi = document.querySelectorAll('.gioco[data-codice ="' + codice + '"]');
     let imgPreferiti;
     let preferiti;
@@ -275,7 +275,7 @@ function togliPreferiti(event){
         item.querySelector('.stella').classList.add('hidden');
     }
     giochiPreferiti.splice(giochiPreferiti.indexOf(imgPreferiti.dataset.codice), 1);
-    fetch("server-preferitiEliminazione.php?codice=" + imgPreferiti.dataset.codice).then(onResponse).then(esitoModifica);
+    fetch("server-database.php?comando=eliminazionePreferiti&codice=" + imgPreferiti.dataset.codice).then(onResponse).then(esitoModifica);
 }
 
 function ricerca(event){
@@ -411,7 +411,7 @@ let giochiAperti = [];
 let vecchiaValue = '';
 const giochiPreferiti = [];
 let errorePreferiti;
-fetch("server-preferitiLettura.php").then(onResponse).then(onJsonPreferiti);
+fetch("server-database.php?comando=letturaPreferiti").then(onResponse).then(onJsonPreferiti);
 const blocchi = document.querySelectorAll('#blocchi .blocco');
 for (const blocco of blocchi){
     blocco.addEventListener('mouseover', vediDidascalia);

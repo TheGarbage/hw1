@@ -2,6 +2,7 @@
 function creaEvento(evento){
     const section = document.createElement('section');
     section.classList.add('evento');
+    section.dataset.codice = evento.Codice;
     main.appendChild(section);
     const img = document.createElement('img');
     img.src = "Immagini/" + evento.Titolo + ".jpg";
@@ -30,6 +31,7 @@ function creaEvento(evento){
 
 function creaEventi(eventi){
     const info = document.createElement('p');
+    main.appendChild(info);
     if(eventi.length !== 0){
         info.textContent = "Eventi attualmente attivi";
         for(evento of eventi)
@@ -40,7 +42,6 @@ function creaEventi(eventi){
         info.textContent = "Non sono presenti attivi al momento";
         window.setTimeout("controllaVuoto()", 60000);
     }
-    main.appendChild(info);
 }
 
 //GESTIONE TEMPO -------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -53,7 +54,7 @@ function togliSecondo(){
         item = tempoRimasto.textContent.split(':');
         newSecondi = parseInt(item[2]) - 1; 
         if(newSecondi <= 0){
-            fetch("server-eventi.php").then(onResponse).then(stampaDiNuovo);
+            fetch("server-database.php?comando=eventi").then(onResponse).then(stampaDiNuovo);
             return;
         }
         else if(newSecondi < 10)
@@ -66,7 +67,7 @@ function togliSecondo(){
 
 function controllaVuoto(){
     main.innerHTML = '';
-    fetch("server-eventi.php").then(onResponse).then(stampa);
+    fetch("server-database.php?comando=eventi").then(onResponse).then(stampa);
 }
 
 //FUNZIONI FETCH -------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -103,4 +104,4 @@ function onResponse(response){
 //CONFIGURAZIONE INIZIALE -------------------------------------------------------------------------------------------------------------------------------------------------------
 const main = document.querySelector('main');
 const giochiPreferiti = [];
-fetch("server-eventi.php").then(onResponse).then(stampa);
+fetch("server-database.php?comando=eventi").then(onResponse).then(stampa);

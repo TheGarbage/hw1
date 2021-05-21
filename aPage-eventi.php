@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="stile-eventi.css">
         <script src="script-menuMobile.js" defer></script>
         <script src="script-eventi.js" defer></script>
-        <?php if(isset($_SESSION["userNameLudoteca"])) echo "<script src='script-preferiti.js' defer></script>"; ?> 
+        <?php if(isset($_SESSION["userNameLudoteca"])) echo "<script src='script-eventiPreferiti.js' defer></script>"; ?> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">

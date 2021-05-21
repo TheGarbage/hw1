@@ -5,16 +5,13 @@ function rispostaRegistrazione(response){
 
 function stampa(json){
     const errore = document.querySelector('p.erroreL');
-    if(json.risposta === "ok"){
-        if(errore.textContent === "Username non disponibile")
-            form.userName.parentNode.classList.remove('erroreL');
+    if(json.risposta === "ok")
         form.submit();
-    }
     else{
         errore.textContent = json.risposta;
         form.classList.remove('hidden');
         if(json.risposta === "Username non disponibile")
-            errore.textContent = "Username non disponibile";
+        form.userName.parentNode.classList.add('erroreL')
     }
 }
 
@@ -86,7 +83,11 @@ function controlloContenutoRegistrazione(event){
     }     
     else{
         form.classList.add('hidden');
-        fetch("server-registrazione.php", {method: 'post', body: new FormData(form)}).then(rispostaRegistrazione).then(stampa);
+        if(errore.textContent === "Username non disponibile"){
+            form.userName.parentNode.classList.remove('erroreL');
+            errore.textContent = "";
+        }
+        fetch("server-database.php?comando=registrazione", {method: 'post', body: new FormData(form)}).then(rispostaRegistrazione).then(stampa);
     }
 }
 
