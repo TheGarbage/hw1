@@ -49,6 +49,10 @@ li label{
     position: relative;
 }
 
+li label.submitLabel{
+    margin-bottom: 0px;
+}
+
 li label div, li label input{
     width: 50%;
     height: 1rem;
@@ -79,11 +83,6 @@ li label input{
     justify-content: center;
     align-items: center;
 }
-
-input[data-name = 'data']{
-   width: fit-content;
-}
-
 
 [data-name = 'username']{
     background-color: rgba(145, 146, 177, .2);
@@ -128,10 +127,21 @@ li label div img:hover{
     padding: 6px;
     border-radius: 20px;
     width: fit-content;
+    margin: 0px auto;
 }
 
 [data-name = 'password']:hover{
     background-color: rgba(255, 255, 255, .1);
+}
+
+li label input.submitPassword{
+    position: static;
+}
+
+form[name = 'password']{
+    padding: 10px;
+    border: 2px solid rgba(255, 255, 255, .8);
+    border-radius: 20px;
 }
 
 /*TABELLA TRANSAZIONI----------------------------------------------------------------------------------*/

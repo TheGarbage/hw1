@@ -20,29 +20,6 @@ function controlloContenutoRegistrazione(event){
     const errore = document.querySelector('p.erroreL');
     event.preventDefault();
     if(document.querySelector('label.erroreL') !== null && errore.textContent !== "Username non disponibile");
-    else if(form.nomeCognome.value.length.toString() > form.nomeCognome.dataset.max && 
-            !(form.nomeCognome.value.length.toString().length < form.nomeCognome.dataset.max.length)){
-        errore.textContent = "Nome e cognome troppo lunghi(Max 50)";
-        form.nomeCognome.parentNode.classList.add('erroreL');
-        form.nomeCognome.addEventListener('blur', controllaLunghezza);
-    }
-    else if(form.userName.value.length.toString() > form.userName.dataset.max && 
-            !(form.userName.value.length.toString().length < form.userName.dataset.max.length)){
-        errore.textContent = "Username troppo lungo(Max 20)";
-        form.userName.parentNode.classList.add('erroreL');
-        form.userName.addEventListener('blur', controllaLunghezza);
-    }
-    else if(form.occupazione.value.length.toString() > form.occupazione.dataset.max && 
-            !(form.occupazione.value.length.toString().length < form.occupazione.dataset.max.length)){
-        errore.textContent = "Ocupazione troppo lunga(Max 30)";
-        form.occupazione.parentNode.classList.add('erroreL');
-        form.occupazione.addEventListener('blur', controllaLunghezza);
-    }
-    else if(form.passWord.value.length < 8){
-        errore.textContent = "La password deve essere di almeno 8 caratteri";
-        form.passWord.parentNode.classList.add('erroreL');
-        form.passWord.addEventListener('blur', controllaLunghezzaPassword);
-    }
     else if(form.nomeCognome.value.length === 0 || form.userName.value.length === 0 || form.passWord.value.length === 0 ||
         form.confermaPassword.value.length === 0 || form.occupazione.value.length === 0 || form.dataNascita.value.length === 0){
         errore.textContent = "Devi compilare tutti i campi";
@@ -70,6 +47,29 @@ function controlloContenutoRegistrazione(event){
             form.dataNascita.parentNode.classList.add('erroreL');
             form.dataNascita.addEventListener('blur', controllaErrore);
         }
+    }
+    else if(form.nomeCognome.value.length.toString() > form.nomeCognome.dataset.max && 
+            !(form.nomeCognome.value.length.toString().length < form.nomeCognome.dataset.max.length)){
+        errore.textContent = "Nome e cognome troppo lunghi(Max 50)";
+        form.nomeCognome.parentNode.classList.add('erroreL');
+        form.nomeCognome.addEventListener('blur', controllaLunghezza);
+    }
+    else if(form.userName.value.length.toString() > form.userName.dataset.max && 
+            !(form.userName.value.length.toString().length < form.userName.dataset.max.length)){
+        errore.textContent = "Username troppo lungo(Max 20)";
+        form.userName.parentNode.classList.add('erroreL');
+        form.userName.addEventListener('blur', controllaLunghezza);
+    }
+    else if(form.occupazione.value.length.toString() > form.occupazione.dataset.max && 
+            !(form.occupazione.value.length.toString().length < form.occupazione.dataset.max.length)){
+        errore.textContent = "Ocupazione troppo lunga(Max 30)";
+        form.occupazione.parentNode.classList.add('erroreL');
+        form.occupazione.addEventListener('blur', controllaLunghezza);
+    }
+    else if(form.passWord.value.length < 8){
+        errore.textContent = "La password deve essere di almeno 8 caratteri";
+        form.passWord.parentNode.classList.add('erroreL');
+        form.passWord.addEventListener('blur', controllaLunghezzaPassword);
     }
     else if(form.passWord.value !== form.confermaPassword.value){
         errore.textContent = "Le due password non corrispondono";
