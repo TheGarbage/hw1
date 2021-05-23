@@ -39,7 +39,7 @@ function creaEventi(eventi){
         window.setTimeout("togliSecondo()", 1000);  
     }
     else{
-        info.textContent = "Non sono presenti attivi al momento";
+        info.textContent = "Non sono presenti eventi attivi al momento";
         window.setTimeout("controllaVuoto()", 60000);
     }
 }

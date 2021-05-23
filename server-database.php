@@ -4,7 +4,7 @@
     require ('db-config.php');
     $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']) or die(mysqli_error($conn));
     if($_GET['comando'] === "sceltaContest" || $_GET['comando'] === "letturaPreferiti" || 
-       $_GET['comando'] === "inserimentoPreferiti" || $_GET['comando'] === "eliminazionePreferiti"){
+       $_GET['comando'] === "inserimentoPreferiti" || $_GET['comando'] === "eliminazionePreferiti" ){
         session_start();
         if(!isset($_SESSION["userNameLudoteca"])) 
             esci("Loggati per continuare");
@@ -61,6 +61,9 @@
             $occupazione = mysqli_real_escape_string($conn, $_POST["occupazione"]);
             $query = "INSERT INTO persona(CF, Password, Nome, Anno_nascita, occupazione) VALUES('$username', '$password', '$nomeCognome' ,'$data', '$occupazione')";
             break;
+        // case "letturaTransazioni":
+        //     $query = "SELECT  inizio, fine, punteggio, sconto, spesa FROM cronologia WHERE Cf ='".$username."'";
+        //     break;
         default:
             esci("Comando sconosciuto, riprovare");
     }
@@ -84,11 +87,16 @@
                                     'Descrizione' => $row['Nome']."</br>Modificatore Bonus: ".$row['Modificatore_bonus']."x</br>Modificatore difficoltà: ".$row['Modificatore_difficolta']."x");
             mysqli_free_result($res);
             break;
-            case "letturaPreferiti":
-                while($row = mysqli_fetch_assoc($res))
-                    $response[] = $row['Codice_videogioco'];
+        case "letturaPreferiti":
+            while($row = mysqli_fetch_assoc($res))
+                $response[] = $row['Codice_videogioco'];
             mysqli_free_result($res);
             break;
+        // case "letturaTransazioni":
+        //     while($row = mysqli_fetch_assoc($res))
+        //         $response[] = $row;
+        //     mysqli_free_result($res);
+        //     break;
     }
     echo json_encode($response);
 

@@ -78,33 +78,31 @@
                 echo $responso;
             require ('db-config.php');
             $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
-            if(!$conn){
+            if(!$conn)
                 echo "<p class='errore'> Errore connessione database generale, riprovare </p>";
-                exit;
-            }
-            $query = "CALL proc2(100)";
-            $res = mysqli_query($conn, $query);
-            if(!$res){
-                echo "<p class='errore'> Errore lettura dati classifica, riprovare </p>";
+            else{
+                $query = "CALL proc2(100)";
+                $res = mysqli_query($conn, $query);
                 mysqli_close($conn);
-                exit;
+                if(!$res)
+                    echo "<p class='errore'> Errore lettura dati classifica, riprovare </p>";
+                else{
+                    $tabella = "<table> <caption>- - -  TOP 100  - - -</caption>
+                                <thead> <tr> <th>N</th> <th>Username</th> <th>Anno Nascita</th> <th>Punteggio Medio</th> <th>Sconto Medio</th> <th>Punti Totali</th> </tr> </thead> <tbody>";
+                    while($utente = mysqli_fetch_assoc($res))
+                        if($utente['punti_totali'] !== '0')
+                            $tabella .= "<tr> <th>".$utente['posizione']."</th> <th>".$utente['cf']."</th> <th>".$utente['anno_nascita']."</th> <th>".$utente['media_punteggio']."</th> <th>".$utente['media_sconto']."</th> <th>".$utente['punti_totali']."</th></tr>";
+                    $tabella .= "</tbody> </table>";
+                    mysqli_free_result($res);
+                    echo $tabella;
+                }
             }
-            mysqli_close($conn);
-            $tabella = "<table> <caption>- - -  TOP 100  - - -</caption>
-                        <thead> <tr> <th>N</th> <th>Username</th> <th>Anno Nascita</th> <th>Punteggio Medio</th> <th>Sconto Medio</th> <th>Punti Totali</th> </tr> </thead> <tbody>";
-            while($utente = mysqli_fetch_assoc($res))
-                if($utente['punti_totali'] !== '0')
-                    $tabella .= "<tr> <th>".$utente['posizione']."</th> <th>".$utente['cf']."</th> <th>".$utente['anno_nascita']."</th> <th>".$utente['media_punteggio']."</th> <th>".$utente['media_sconto']."</th> <th>".$utente['punti_totali']."</th></tr>";
-            $tabella .= "</tbody> </table>";
-            mysqli_free_result($res);
-            echo $tabella;
         ?>
-        <div id="distanziatore">
+        <div id="distanziatore"></div>
         <div id="footerConteiner">
             <footer class="sito-principale"> 
                 <p>Davide bucchieri o46002072</p> <div class="overlay"></div>
             </footer>
-        </div>
         </div>
     </body>
 </html>

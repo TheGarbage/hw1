@@ -56,12 +56,11 @@
             <div data-tema="Corsa" class="blocco pointer" ><h4>Corsa</h4><p class='hidden'>Guida in alcuni dei circuiti più famosi al mondo</p><div class="block-overlay overlay dark-overlay"></div></div>
             <div data-tema="VediTutto" class="blocco pointer"><h4>Tutto</h4><p class='hidden'>Perchè vedere una categoria alla volta?</p><div class="block-overlay overlay dark-overlay"></div></div>
         </section>
-        <div id="distanziatore">
+        <div id="distanziatore" class="sito-principale"></div>
         <div id="footerConteiner">
             <footer class="sito-principale"> 
                 <p>Davide bucchieri o46002072</p> <div class="overlay"></div>
             </footer>
-        </div>
         </div>
     </body>
 </html>

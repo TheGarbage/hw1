@@ -1,9 +1,12 @@
 <?php 
-      session_start(); 
-      if(!isset($_SESSION["userNameLudoteca"])){
-            header("Location: aPage-login.php");
-            exit;
-      }
+    session_start(); 
+    if(!isset($_SESSION["userNameLudoteca"])){
+        header("Location: aPage-login.php");
+        exit;
+    }
+    require ('db-config.php');
+    $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
+    $username = mysqli_real_escape_string($conn, $_SESSION["userNameLudoteca"]);
 ?>
 
 <html>
@@ -13,6 +16,7 @@
         <link rel="stylesheet" href="stile-principale.css">
         <link rel="stylesheet" href="stile-infoProfilo.css">
         <script src="script-menuMobile.js" defer></script>
+        <script src="script-infoProfilo.js" defer></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
@@ -42,13 +46,65 @@
         </header>
         <section id="descrizione">
             <p>
-                <?php echo "Ciao ".$_SESSION["userNameLudoteca"].", Qui puoi vedere tutte le informazioni che non puoi vedere altrove!" ?>
+                <?php echo "Ciao ".$username.", qui puoi vedere i dettagli del tuo profilo e lo storico transazioni!" ?>
             </p>
         </section>
         <ul id="titolo">
-            <li>Info generali</li>
-            <li>Ultime 30 transazioni</li>
-            <li>Gioco più usato e categoria preferiti</li>
+            <li class='infoGenerali'>Info generali
+                <main>
+                    <section>
+                        <form name="nome" method="post">
+                            <label>Nome e cognome <div data-name="nome" data-max="50" class="barraInput"><p>davide bucchieri</p><img class="pointer" src="immagini/modificabile.jpg"></div></label>
+                        </form>
+                        <label>Username <div data-name="username" class="barraInput">sylvia</div></label> 
+                        <form name="data" method="post">
+                            <label>Data nascita <div data-name="data" class="barraInput"><p>27/05/1999</p><img class="pointer" src="immagini/modificabile.jpg"></div></label>
+                        </form>
+                        <form name="occupazione" method="post">
+                            <label>Occupazione <div data-name="occupazione" data-max="30" class="barraInput"><p>studente</p><img class="pointer" src="immagini/modificabile.jpg"></div></label>
+                        </form>
+                    </section>
+                    <section>
+                    <div data-nome="password" class="pointer">Cambia password</div>
+                    </section>
+                </main>
+            </li>
+            <li>Riepilogo transazioni
+                <?php 
+                    if(!$conn)
+                        echo "<p class='errore'> Errore connessione database generale, riprovare </p>";
+                    else{
+                        $query = "SELECT inizio, fine, TIMEDIFF(fine, inizio) AS durata, punteggio, sconto, spesa FROM cronologia WHERE Cf = '".$username."'";
+                        $res = mysqli_query($conn, $query);
+                        mysqli_close($conn);
+                        if(!$res)
+                            echo "<p class='errore'> Errore lettura dati classifica, riprovare </p>";
+                        else{
+                            $utente = mysqli_fetch_assoc($res);
+                            if($utente === null)
+                                echo "(0 transazioni effettuate)";
+                            else{
+                                $spesa = 0;
+                                $sconto = 0;
+                                $N_righe = 0;
+                                $punteggio = 0;
+                                $tabella = "<table> <thead> <tr> <th>Orario ingresso</th> <th>Orario uscita</th> <th>Durata sessione</th> <th>Punteggio guadagnato</th> <th>Sconto ottenuto</th> <th>Costo sessione</th> </tr> </thead> <tbody>";
+                                do{
+                                    $spesa += $utente['spesa'];
+                                    $sconto += $utente['sconto'];
+                                    $N_righe++;
+                                    $punteggio += $utente['punteggio'];
+                                    $tabella .= "<tr> <th>".$utente['inizio']."</th> <th>".$utente['fine']."</th> <th>".$utente['durata']."</th> <th>".$utente['punteggio']."</th> <th>".$utente['sconto']."</th> <th>".$utente['spesa']."</th></tr>";
+                                }while($utente = mysqli_fetch_assoc($res));
+                                $tabella .= "<tr> <th class='nascondi'></th> <th class='nascondi'></th> <th>TOTALE:</th> <th>".$punteggio."</th> <th>".$sconto/$N_righe."</th> <th>".$spesa."</th></tr>";
+                                $tabella .= "</tbody> </table>";
+                                echo $tabella;
+                            }
+                            mysqli_free_result($res);
+                        }
+                    }
+                ?>
+            </li>
         </ul>
         <a href="aPage-logout.php" id="logout">Logout<a>
         <div id="distanziatore"></div>

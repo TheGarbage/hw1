@@ -47,7 +47,7 @@
                 Ogni giorno lanceremo senza preavviso eventi temporanei, delle durata di qualche ora, per permettere i giocatori che riusciranno a parteciparvi di guadagnare più punti.
                 Gli eventi sono legati ognuno ad un gioco specifico e sono caratterizzati da un modificatore di punti e di difficoltà. Il primo ti permette di prendere più punti senza 
                 grossi cambiamenti al gameplay. Il secondo, in genere, ti da più punti bonus ancora ma rendendo il gioco nettamente più complicato. Qui sotto sono elencati gli eventi attivi
-                attualmente<?php echo (isset($_SESSION["userNameLudoteca"])) ?  "(Abbiamo evidenziato gli eventi sui tuoi giochi preferiti)." : ". Loggati per avere in evidenzia gli eventi sui tuoi
+                attualmente<?php echo (isset($_SESSION["userNameLudoteca"])) ?  " (Abbiamo evidenziato gli eventi sui tuoi giochi preferiti)." : ". Loggati per avere in evidenzia gli eventi sui tuoi
                 giochi preferiti!"; ?>
             </p>
         </section>
