@@ -10,7 +10,7 @@
         $errore = " Errore connessione database, riprovare";
     else {
         $username = mysqli_real_escape_string($conn, $_SESSION["userNameLudoteca"]);
-        $query = "SELECT cf, nome, anno_nascita, occupazione FROM persona";
+        $query = "SELECT cf, nome, anno_nascita, occupazione FROM persona where cf='".$username."'";
         $res = mysqli_query($conn, $query);
         if(!$res)
             $errore = " Errore lettura dati, riprovare";

@@ -4,7 +4,7 @@
     require ('db-config.php');
     $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']) or die(mysqli_error($conn));
     if($_GET['comando'] === "sceltaContest" || $_GET['comando'] === "letturaPreferiti" || $_GET['comando'] === "inserimentoPreferiti" || 
-    $_GET['comando'] === "eliminazionePreferiti" || $_GET['comando'] === "modificaDati" ){
+    $_GET['comando'] === "eliminazionePreferiti" || $_GET['comando'] === "modificaDati" || $_GET['comando'] === "cambioPassword"){
         session_start();
         if(!isset($_SESSION["userNameLudoteca"])) 
             esci("Loggati per continuare");
@@ -68,13 +68,33 @@
                 case "nome": if (strlen($_GET['valore']) <= 50) break;
                 case "anno_nascita": if (!(strtotime($_GET['valore']))) break;
                 case "occupazione": if (strlen($_GET['valore']) <= 30) break;
-                default: esci("Errore formattazione valori, riprovare");
+                default: esci("Errore formattazione valori get, riprovare");
             }
             if($_GET['valore'] !== "anno_nascita")
                 $valore = mysqli_real_escape_string($conn, $_GET["valore"]);
             else
                 $valore = mysqli_real_escape_string($conn, date('Y-m-d', strtotime($_GET["valore"])));
             $query = "UPDATE persona SET ".$_GET['chiave']."='".$valore."' WHERE Cf ='".$username."'";
+            break;
+        case "cambioPassword":
+            if(!isset($_GET['vecchiaPassword']) || empty($_GET['vecchiaPassword']) || !isset($_GET['nuovaPassword']) || empty($_GET['nuovaPassword']))
+                //|| $_GET['nuovaPassword'] !== $_GET['confermaPassword']);
+                esci("Errore formattazione valore get, riprovare");
+            $query = "SELECT password FROM persona WHERE cf = '".$username."'";
+            $res = mysqli_query($conn, $query);
+            if(!$res){
+                mysqli_close($conn);
+                esci("Errore select, riprovare");
+            }
+            $row = mysqli_fetch_assoc($res);
+            mysqli_free_result($res);
+            if (password_verify($_GET['vecchiaPassword'], $row['password'])) {
+                $nuovaPassword = mysqli_real_escape_string($conn, $_GET['nuovaPassword']);
+                $nuovaPassword = password_hash($nuovaPassword, PASSWORD_BCRYPT);
+                $query = "UPDATE persona SET password='".$nuovaPassword."' WHERE Cf ='".$username."'";
+            }
+            else
+                esci("falsaPassword");
             break;
         default:
             esci("Comando sconosciuto, riprovare");
@@ -89,6 +109,7 @@
         case "inserimentoPreferiti":
         case "eliminazionePreferiti":
         case "registrazione":
+        case "cambioPassword":
             $response = array('risposta' => "ok");
             break;
         case "eventi":

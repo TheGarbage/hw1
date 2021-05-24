@@ -1,4 +1,4 @@
-function concludiModifica(json){
+function esitoModificaDati(json){
     const errore = document.querySelector('p.errore.margineRidotto');
     if(json['risposta'] === "ok"){
         const label = document.querySelector("form[name='" + json['name'] + "'] label");
@@ -8,6 +8,37 @@ function concludiModifica(json){
         const div = label.querySelector('div');
         div.querySelector('p').textContent = label.querySelector('input').value;
         div.classList.remove('hidden');
+        errore.textContent = "Modifica '" + label.innerText.split(':')[0] + "' effettuata";
+        errore.classList.add('ribaltato');
+    }
+    else
+        errore.textContent = json['risposta'];
+}
+
+function esitoCambioPassword(json){
+    const errore = document.querySelector('p.errore.margineRidotto');
+    const vecchiaPassword = document.querySelector("input[name='vecchiaPassword']");
+    const nuovaPassword = document.querySelector("input[name='nuovaPassword']");
+    const confermaPassword = document.querySelector("input[name='confermaPassword']");
+    if(json['risposta'] === "ok"){
+        if(vecchiaPassword.classList.contains('erroreM'))
+            vecchiaPassword.classList.remove('erroreM');
+        if(nuovaPassword.classList.contains('erroreM'))
+            nuovaPassword.classList.remove('erroreM');
+        if(confermaPassword.classList.contains('erroreM'))
+            confermaPassword.classList.remove('erroreM');
+        if(errore.textContent.length !== 0)
+            errore.textContent = "";
+        vecchiaPassword.value = nuovaPassword.value = confermaPassword.value = "";
+        form = vecchiaPassword.parentNode.parentNode;
+        form.parentNode.querySelector('div').classList.remove('hidden');
+        form.classList.add('hidden');
+        errore.textContent = "Password aggiornata con successo";
+        errore.classList.add('ribaltato');
+    }
+    else if(json['risposta'] === "falsaPassword"){
+        errore.textContent = "La password vecchia non corrisponde, riprovare";
+        vecchiaPassword.classList.add('erroreM');
     }
     else
         errore.textContent = json['risposta'];
@@ -31,6 +62,10 @@ function inviaDati(event){
     const inputs = form.querySelectorAll('input');
     const errore = document.querySelector('p.errore.margineRidotto');
     const div = form.querySelector('div');
+    if(errore.classList.contains('ribaltato')){
+        errore.classList.remove('ribaltato');
+        errore.textContent = "";
+    }
     if(inputs[0].value.length === 0){
         errore.textContent = "Non puoi lasciare il campo vuoto";
         inputs[0].classList.add('erroreM');
@@ -54,7 +89,7 @@ function inviaDati(event){
             inputs[0].classList.remove('erroreM');
         if(errore.textContent.length !== 0)
             errore.textContent = "";
-        fetch("server-database.php?comando=modificaDati&chiave=" + form.name + "&valore=" + inputs[0].value).then(onResponse).then(concludiModifica);
+        fetch("server-database.php?comando=modificaDati&chiave=" + form.name + "&valore=" + inputs[0].value).then(onResponse).then(esitoModificaDati);
     }
 }
 
@@ -84,11 +119,45 @@ function riApriModificaPassword(event){
     pulsante.parentNode.querySelector('form').classList.remove('hidden');
 }
 
-function cambiaPassword(event){
+function inviaPasswords(event){
     event.preventDefault();
-    form = event.currentTarget;
-    form.parentNode.querySelector('div').classList.remove('hidden');
-    form.classList.add('hidden');
+    const errore = document.querySelector('p.errore.margineRidotto');
+    const vecchiaPassword = document.querySelector("input[name='vecchiaPassword']");
+    const nuovaPassword = document.querySelector("input[name='nuovaPassword']");
+    const confermaPassword = document.querySelector("input[name='confermaPassword']");
+    if(errore.classList.contains('ribaltato')){
+        errore.classList.remove('ribaltato');
+        errore.textContent = "";
+    }
+    if(vecchiaPassword.classList.contains('erroreM'))
+        vecchiaPassword.classList.remove('erroreM');
+    if(nuovaPassword.classList.contains('erroreM'))
+        nuovaPassword.classList.remove('erroreM');
+    if(confermaPassword.classList.contains('erroreM'))
+        confermaPassword.classList.remove('erroreM');
+    if(vecchiaPassword.value.length < 8){
+        errore.textContent = "La password vecchia era di almeno 8 caratteri";
+        vecchiaPassword.classList.add('erroreM');
+    }
+    else if(nuovaPassword.value.length < 8){
+        errore.textContent = "La password nuova deve avere almeno 8 caratteri";
+        nuovaPassword.classList.add('erroreM');   
+    }
+    else if(vecchiaPassword.value === nuovaPassword.value){
+        errore.textContent = "Le nuova password non deve essere uguale alla vecchia";
+        nuovaPassword.classList.add('erroreM');   
+    }
+    else if(nuovaPassword.value !== confermaPassword.value){
+        errore.textContent = "La password di conferma non corrisponde";
+        confermaPassword.classList.add('erroreM');   
+    }
+    else{ 
+        if(errore.textContent.length !== 0)
+            errore.textContent = "";
+        fetch(
+            "server-database.php?comando=cambioPassword&vecchiaPassword=" + vecchiaPassword.value + "&nuovaPassword=" + nuovaPassword.value + "&confermaPassword=" + confermaPassword.value
+        ).then(onResponse).then(esitoCambioPassword);
+    }
 }
 
 function apriModificaPassword(event){
@@ -100,7 +169,7 @@ function apriModificaPassword(event){
     const form = document.createElement('form');
     form.name = "password";
     form.method = "post";
-    form.addEventListener('submit', cambiaPassword);
+    form.addEventListener('submit', inviaPasswords);
     section.appendChild(form);
     const label1 = document.createElement('label');
     label1.textContent = "Vecchia password: ";

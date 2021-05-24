@@ -12,9 +12,7 @@
             $errore = "Impossibile connettersi al server, riprovare";
         else{
             $username = mysqli_real_escape_string($conn, $_POST["userName"]);
-            $password = mysqli_real_escape_string($conn, $_POST["passWord"]);
-            $password = password_hash($password, PASSWORD_BCRYPT);
-            $query = "SELECT * FROM persona WHERE cf = '".$username."'";
+            $query = "SELECT cf, password FROM persona WHERE cf = '".$username."'";
             $res = mysqli_query($conn, $query);
             mysqli_close($conn);
             if(!$res)
@@ -22,7 +20,7 @@
             {
                 if(mysqli_num_rows($res) > 0){
                     $rispostaDatabase = mysqli_fetch_assoc($res);
-                    if (password_verify($_POST['passWord'], $rispostaDatabase['Password'])) {
+                    if (password_verify($_POST['passWord'], $rispostaDatabase['password'])) {
                         $_SESSION["userNameLudoteca"] = $_POST["userName"];
                         header("Location: ".$urlChiamata);
                     }
