@@ -65,10 +65,7 @@ li label div, li label input{
 
 li label input{
     height: calc(1rem + 4px);
-}
-
-input.barraInput.erroreM{
-    border-color: rgba(255, 0, 0, .9);
+    width: calc(50% + 4px);
 }
 
 li label input.submit{
@@ -77,19 +74,12 @@ li label input.submit{
     right: -3rem;
 }
 
-[data-name = 'username']{
+/*MODIFICA DATI----------------------------------------------------------------------------------*/
+div[data-name = 'username']{
     background-color: rgba(145, 146, 177, .2);
     border: 2px solid rgba(145, 146, 177, .2);  
     justify-content: center;
     align-items: center;
-}
-
-li label div.barraInput:hover{
-    border-color: rgba(145, 146, 177, .8); 
-}
-
-li label [data-name = 'username'].barraInput:hover{
-    border-color: rgba(145, 146, 177, .2); 
 }
 
 li label div p{
@@ -109,33 +99,38 @@ li label div img{
     opacity: .8;
 }
 
-li label div img:hover{
-    height: .8rem;
-    width: .8rem;
-    padding: 0rem;
-    opacity: 1;
-}
-
-[data-name = 'password']{
+/*MODIFICA PASSWORD----------------------------------------------------------------------------------*/
+div[data-name = 'password']{
     padding: 6px;
     border-radius: 20px;
     width: fit-content;
     margin: 0px auto;
 }
 
-[data-name = 'password']:hover{
-    background-color: rgba(255, 255, 255, .1);
+form[name = 'password']{
+    position: relative;
+    padding: 10px;
+    margin-top: -10px;
+    border: 2px solid rgba(255, 255, 255, .8);
+    border-radius: 20px;
+}
+
+form[name = 'password'] img{
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
 }
 
 li label input.submitPassword{
     position: static;
 }
 
-form[name = 'password']{
-    padding: 10px;
-    margin-top: -10px;
-    border: 2px solid rgba(255, 255, 255, .8);
-    border-radius: 20px;
+/*ERRORE----------------------------------------------------------------------------------*/
+input.barraInput.erroreM{
+    border-color: rgba(255, 0, 0, .9);
 }
 
 p.errore.margineRidotto{
@@ -181,6 +176,29 @@ li table{
 /*CAMBI DISTANZIATORE----------------------------------------------------------------------------------*/
 #distanziatore{
     height: 200px;
+}
+
+/*HOVER VARI----------------------------------------------------------------------------------*/
+li label div[data-name = 'username'].barraInput:hover{
+    border-color: rgba(145, 146, 177, .2); 
+}
+
+li label div img:hover{
+    height: .8rem;
+    width: .8rem;
+    padding: 0rem;
+    opacity: 1;
+}
+
+div[data-name = 'password']:hover{
+    background-color: rgba(255, 255, 255, .1);
+}
+
+form[name = 'password'] img:hover{
+    right: -22.5px;
+    top: -22.5px;
+    width: 25px;
+    height: 25px;
 }
 
 /*MEDIA----------------------------------------------------------------------------------*/

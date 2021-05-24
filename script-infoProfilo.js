@@ -1,3 +1,4 @@
+//RISPOSTE FETCH -------------------------------------------------------------------------------------------------------------------------------------------------------
 function esitoModificaDati(json){
     const errore = document.querySelector('p.errore.margineRidotto');
     if(json['risposta'] === "ok"){
@@ -30,7 +31,7 @@ function esitoCambioPassword(json){
         if(errore.textContent.length !== 0)
             errore.textContent = "";
         vecchiaPassword.value = nuovaPassword.value = confermaPassword.value = "";
-        form = vecchiaPassword.parentNode.parentNode;
+        const form = vecchiaPassword.parentNode.parentNode;
         form.parentNode.querySelector('div').classList.remove('hidden');
         form.classList.add('hidden');
         errore.textContent = "Password aggiornata con successo";
@@ -48,14 +49,7 @@ function onResponse(response){
     return response.json();
 }
 
-function riApriModifica(event){
-    const div = event.currentTarget.parentNode;
-    const label = div.parentNode;
-    div.classList.add('hidden');
-    for(item of label.querySelectorAll('input'))
-        item.classList.remove('hidden');
-}
-
+//CHIAMATE FETCH -------------------------------------------------------------------------------------------------------------------------------------------------------
 function inviaDati(event){
     event.preventDefault();
     const form = event.currentTarget;
@@ -91,32 +85,6 @@ function inviaDati(event){
             errore.textContent = "";
         fetch("server-database.php?comando=modificaDati&chiave=" + form.name + "&valore=" + inputs[0].value).then(onResponse).then(esitoModificaDati);
     }
-}
-
-function apriModifica(event){
-    const div = event.currentTarget.parentNode;
-    const label = div.parentNode;
-    div.classList.add('hidden');
-    const input = document.createElement('input');
-    input.name = div.dataset.name;
-    input.type = (div.dataset.name !== 'data') ? "text":"date";
-    input.value = div.querySelector('p').textContent;
-    input.dataset.max = div.dataset.max;
-    input.classList.add('barraInput');
-    label.appendChild(input);
-    const submit = document.createElement('input');
-    submit.type = 'submit';
-    submit.classList.add('submit');
-    label.appendChild(submit);
-    submit.parentNode.parentNode.addEventListener('submit', inviaDati);
-    event.currentTarget.removeEventListener('click', apriModifica);
-    event.currentTarget.addEventListener('click', riApriModifica);
-}
-
-function riApriModificaPassword(event){
-    const pulsante = event.currentTarget;
-    pulsante.classList.add('hidden');
-    pulsante.parentNode.querySelector('form').classList.remove('hidden');
 }
 
 function inviaPasswords(event){
@@ -160,6 +128,61 @@ function inviaPasswords(event){
     }
 }
 
+//MODIFICA DATI -------------------------------------------------------------------------------------------------------------------------------------------------------
+function riApriModifica(event){
+    const div = event.currentTarget.parentNode;
+    const label = div.parentNode;
+    div.classList.add('hidden');
+    for(item of label.querySelectorAll('input'))
+        item.classList.remove('hidden');
+}
+
+function apriModifica(event){
+    const div = event.currentTarget.parentNode;
+    const label = div.parentNode;
+    div.classList.add('hidden');
+    const input = document.createElement('input');
+    input.name = div.dataset.name;
+    input.type = (div.dataset.name !== 'data') ? "text":"date";
+    input.value = div.querySelector('p').textContent;
+    input.dataset.max = div.dataset.max;
+    input.classList.add('barraInput');
+    label.appendChild(input);
+    const submit = document.createElement('input');
+    submit.type = 'submit';
+    submit.classList.add('submit');
+    label.appendChild(submit);
+    submit.parentNode.parentNode.addEventListener('submit', inviaDati);
+    event.currentTarget.removeEventListener('click', apriModifica);
+    event.currentTarget.addEventListener('click', riApriModifica);
+}
+
+//MODIFICA PASSWORD -------------------------------------------------------------------------------------------------------------------------------------------------------
+function chiudiModificaPassword(){
+    const errore = document.querySelector('p.errore.margineRidotto');
+    const vecchiaPassword = document.querySelector("input[name='vecchiaPassword']");
+    const nuovaPassword = document.querySelector("input[name='nuovaPassword']");
+    const confermaPassword = document.querySelector("input[name='confermaPassword']");
+    if(vecchiaPassword.classList.contains('erroreM'))
+        vecchiaPassword.classList.remove('erroreM');
+    if(nuovaPassword.classList.contains('erroreM'))
+        nuovaPassword.classList.remove('erroreM');
+    if(confermaPassword.classList.contains('erroreM'))
+        confermaPassword.classList.remove('erroreM');
+    if(errore.textContent.includes('password') || errore.textContent.includes('Password'))
+        errore.textContent = "";
+    vecchiaPassword.value = nuovaPassword.value = confermaPassword.value = "";
+    const form = vecchiaPassword.parentNode.parentNode;
+    form.parentNode.querySelector('div').classList.remove('hidden');
+    form.classList.add('hidden');
+}
+
+function riApriModificaPassword(event){
+    const pulsante = event.currentTarget;
+    pulsante.classList.add('hidden');
+    pulsante.parentNode.querySelector('form').classList.remove('hidden');
+}
+
 function apriModificaPassword(event){
     const pulsante = event.currentTarget;
     pulsante.classList.add('hidden');
@@ -171,6 +194,11 @@ function apriModificaPassword(event){
     form.method = "post";
     form.addEventListener('submit', inviaPasswords);
     section.appendChild(form);
+    const xButton = document.createElement('img');
+    xButton.src = "Immagini/xButton.jpg";
+    xButton.classList.add('pointer');
+    xButton.addEventListener('click', chiudiModificaPassword)
+    form.appendChild(xButton);
     const label1 = document.createElement('label');
     label1.textContent = "Vecchia password: ";
     form.appendChild(label1);
@@ -206,6 +234,7 @@ function apriModificaPassword(event){
     label4.appendChild(input4);
 }
 
+//CONFIGURAZIONE INIZIALE -------------------------------------------------------------------------------------------------------------------------------------------------------
 for(item of document.querySelectorAll('img.pointer'))    
     item.addEventListener('click', apriModifica);
 document.querySelector("[data-name='password']").addEventListener("click", apriModificaPassword);
