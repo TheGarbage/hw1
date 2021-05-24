@@ -21,6 +21,7 @@ li{
 li.infoGenerali{
     padding-bottom: 40px;
     border-bottom: 3px solid white;
+    margin-bottom: calc(1rem + 10px + 50px);
 }
 
 /*INFO GENERALI----------------------------------------------------------------------------------*/
@@ -66,22 +67,14 @@ li label input{
     height: calc(1rem + 4px);
 }
 
+input.barraInput.erroreM{
+    border-color: rgba(255, 0, 0, .9);
+}
+
 li label input.submit{
     width: fit-content;
-    height: 1rem;
     position: absolute;
     right: -3rem;
-}
-
-li label input{
-    height: calc(1rem + 4px);
-}
-
-[data-name = 'username']{
-    background-color: rgba(145, 146, 177, .2);
-    border: 2px solid rgba(145, 146, 177, .2);  
-    justify-content: center;
-    align-items: center;
 }
 
 [data-name = 'username']{
@@ -142,6 +135,13 @@ form[name = 'password']{
     padding: 10px;
     border: 2px solid rgba(255, 255, 255, .8);
     border-radius: 20px;
+}
+
+p.errore.margineRidotto{
+    margin-bottom: 0px;
+    margin-top: 15px;
+    height: 1rem;
+    font-size: .85rem;
 }
 
 /*TABELLA TRANSAZIONI----------------------------------------------------------------------------------*/

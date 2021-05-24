@@ -3,8 +3,8 @@
         esci("Errore get, comando non inizializzato. Riprovare");
     require ('db-config.php');
     $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']) or die(mysqli_error($conn));
-    if($_GET['comando'] === "sceltaContest" || $_GET['comando'] === "letturaPreferiti" || 
-       $_GET['comando'] === "inserimentoPreferiti" || $_GET['comando'] === "eliminazionePreferiti" ){
+    if($_GET['comando'] === "sceltaContest" || $_GET['comando'] === "letturaPreferiti" || $_GET['comando'] === "inserimentoPreferiti" || 
+    $_GET['comando'] === "eliminazionePreferiti" || $_GET['comando'] === "modificaDati" ){
         session_start();
         if(!isset($_SESSION["userNameLudoteca"])) 
             esci("Loggati per continuare");
@@ -61,9 +61,21 @@
             $occupazione = mysqli_real_escape_string($conn, $_POST["occupazione"]);
             $query = "INSERT INTO persona(CF, Password, Nome, Anno_nascita, occupazione) VALUES('$username', '$password', '$nomeCognome' ,'$data', '$occupazione')";
             break;
-        // case "letturaTransazioni":
-        //     $query = "SELECT  inizio, fine, punteggio, sconto, spesa FROM cronologia WHERE Cf ='".$username."'";
-        //     break;
+        case "modificaDati":
+            if(!isset($_GET['chiave']) || empty($_GET['chiave']) || !isset($_GET['valore']) || empty($_GET['valore']))
+                esci("Parametri chiave-valore inesistenti o vuoti, riprovare");
+            switch ($_GET['chiave']) {
+                case "nome": if (strlen($_GET['valore']) <= 50) break;
+                case "anno_nascita": if (!(strtotime($_GET['valore']))) break;
+                case "occupazione": if (strlen($_GET['valore']) <= 30) break;
+                default: esci("Errore formattazione valori, riprovare");
+            }
+            if($_GET['valore'] !== "anno_nascita")
+                $valore = mysqli_real_escape_string($conn, $_GET["valore"]);
+            else
+                $valore = mysqli_real_escape_string($conn, date('Y-m-d', strtotime($_GET["valore"])));
+            $query = "UPDATE persona SET ".$_GET['chiave']."='".$valore."' WHERE Cf ='".$username."'";
+            break;
         default:
             esci("Comando sconosciuto, riprovare");
     }
@@ -92,11 +104,9 @@
                 $response[] = $row['Codice_videogioco'];
             mysqli_free_result($res);
             break;
-        // case "letturaTransazioni":
-        //     while($row = mysqli_fetch_assoc($res))
-        //         $response[] = $row;
-        //     mysqli_free_result($res);
-        //     break;
+        case "modificaDati":
+            $response = array('risposta' => "ok", 'name' => $_GET['chiave']);
+            break;
     }
     echo json_encode($response);
 

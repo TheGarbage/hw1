@@ -5,12 +5,12 @@ function rispostaRegistrazione(response){
 
 function stampa(json){
     const errore = document.querySelector('p.erroreL');
-    if(json.risposta === "ok")
+    if(json['risposta'] === "ok")
         form.submit();
     else{
-        errore.textContent = json.risposta;
+        errore.textContent = json['risposta'];
         form.classList.remove('hidden');
-        if(json.risposta === "Username non disponibile")
+        if(json['risposta'] === "Username non disponibile")
         form.userName.parentNode.classList.add('erroreL')
     }
 }

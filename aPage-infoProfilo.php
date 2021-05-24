@@ -6,7 +6,17 @@
     }
     require ('db-config.php');
     $conn = mysqli_connect($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['name']);
-    $username = mysqli_real_escape_string($conn, $_SESSION["userNameLudoteca"]);
+    if(!$conn)
+        $errore = " Errore connessione database, riprovare";
+    else {
+        $username = mysqli_real_escape_string($conn, $_SESSION["userNameLudoteca"]);
+        $query = "SELECT cf, nome, anno_nascita, occupazione FROM persona";
+        $res = mysqli_query($conn, $query);
+        if(!$res)
+            $errore = " Errore lettura dati, riprovare";
+        else 
+            $user = mysqli_fetch_assoc($res);
+    }   
 ?>
 
 <html>
@@ -51,23 +61,28 @@
         </section>
         <ul id="titolo">
             <li class='infoGenerali'>Info generali
-                <main>
-                    <section>
-                        <form name="nome" method="post">
-                            <label>Nome e cognome: <div data-name="nome" data-max="50" class="barraInput"><p>davide bucchieri</p><img class="pointer" src="immagini/modificabile.jpg"></div></label>
-                        </form>
-                        <label>Username: <div data-name="username" class="barraInput">sylvia</div></label> 
-                        <form name="data" method="post">
-                            <label>Data nascita: <div data-name="data" class="barraInput"><p>1999-05-27</p><img class="pointer" src="immagini/modificabile.jpg"></div></label>
-                        </form>
-                        <form name="occupazione" method="post">
-                            <label>Occupazione: <div data-name="occupazione" data-max="30" class="barraInput"><p>studente</p><img class="pointer" src="immagini/modificabile.jpg"></div></label>
-                        </form>
-                    </section>
-                    <section>
-                    <div data-name="password" class="pointer">Cambia password</div>
-                    </section>
-                </main>
+                <?php 
+                    echo (isset($errore)) ? "<p class='errore'>".$errore."</p>"
+                    :
+                        "<main>
+                            <section>
+                                <form name='nome' method='post'>
+                                    <label>Nome e cognome: <div data-name='nome' data-max='50' class='barraInput'><p>".$user['nome']."</p><img class='pointer' src='immagini/modificabile.jpg'></div></label>
+                                </form>
+                                <label>Username: <div data-name='username' class='barraInput'>".$user['cf']."</div></label> 
+                                <form name='anno_nascita' method='post'>
+                                    <label>Data nascita: <div data-name='data' class='barraInput'><p>".$user['anno_nascita']."</p><img class='pointer' src='immagini/modificabile.jpg'></div></label>
+                                </form>
+                                <form name='occupazione' method'post'>
+                                    <label>Occupazione: <div data-name='occupazione' data-max='30' class='barraInput'><p>".$user['occupazione']."</p><img class='pointer' src='immagini/modificabile.jpg'></div></label>
+                                </form>
+                            </section>
+                            <section>
+                            <div data-name='password' class='pointer'>Cambia password</div>
+                            </section>
+                        </main>
+                        <p class='errore margineRidotto'></p>"
+                ?>
             </li>
             <li>Riepilogo transazioni
                 <?php 

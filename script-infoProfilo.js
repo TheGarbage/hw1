@@ -1,3 +1,22 @@
+function concludiModifica(json){
+    const errore = document.querySelector('p.errore.margineRidotto');
+    if(json['risposta'] === "ok"){
+        const label = document.querySelector("form[name='" + json['name'] + "'] label");
+        const inputs = label.querySelectorAll('input');
+        for(item of inputs)
+            item.classList.add('hidden');
+        const div = label.querySelector('div');
+        div.querySelector('p').textContent = label.querySelector('input').value;
+        div.classList.remove('hidden');
+    }
+    else
+        errore.textContent = json['risposta'];
+}
+
+function onResponse(response){
+    return response.json();
+}
+
 function riApriModifica(event){
     const div = event.currentTarget.parentNode;
     const label = div.parentNode;
@@ -8,13 +27,35 @@ function riApriModifica(event){
 
 function inviaDati(event){
     event.preventDefault();
-    const label = event.currentTarget.querySelector('label');
-    const div = label.querySelector('div');
-    const inputs = label.querySelectorAll('input');
-    for(item of inputs)
-        item.classList.add('hidden');
-    div.querySelector('p').textContent = inputs[0].value;
-    div.classList.remove('hidden');
+    const form = event.currentTarget;
+    const inputs = form.querySelectorAll('input');
+    const errore = document.querySelector('p.errore.margineRidotto');
+    const div = form.querySelector('div');
+    if(inputs[0].value.length === 0){
+        errore.textContent = "Non puoi lasciare il campo vuoto";
+        inputs[0].classList.add('erroreM');
+    }
+    else if(inputs[0].value.length.toString() > inputs[0].dataset.max && 
+            !(inputs[0].value.length.toString().length < inputs[0].dataset.max.length)){
+        errore.textContent = "Puoi inserire al massimo " + inputs[0].dataset.max + " caratteri";
+        inputs[0].classList.add('erroreM');
+    }
+    else if(inputs[0].value === div.querySelector('p').textContent){
+        if(inputs[0].classList.contains('erroreM'))
+            inputs[0].classList.remove('erroreM');
+        if(errore.textContent.length !== 0)
+            errore.textContent = "";
+        for(item of inputs)
+            item.classList.add('hidden');
+        div.classList.remove('hidden');
+    }
+    else{
+        if(inputs[0].classList.contains('erroreM'))
+            inputs[0].classList.remove('erroreM');
+        if(errore.textContent.length !== 0)
+            errore.textContent = "";
+        fetch("server-database.php?comando=modificaDati&chiave=" + form.name + "&valore=" + inputs[0].value).then(onResponse).then(concludiModifica);
+    }
 }
 
 function apriModifica(event){
