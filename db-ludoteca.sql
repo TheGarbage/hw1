@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 17, 2021 alle 12:52
--- Versione del server: 10.4.18-MariaDB
--- Versione PHP: 8.0.5
+-- Creato il: Mag 24, 2021 alle 23:09
+-- Versione del server: 10.4.19-MariaDB
+-- Versione PHP: 8.0.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -164,7 +164,7 @@ CREATE TABLE `contest` (
 --
 
 INSERT INTO `contest` (`Cf`, `Nome_videogioco`) VALUES
-('bbc99', 'Grand Theft Auto V'),
+('bbc99', 'BioShock Infinite'),
 ('sylvia', 'Super Mario Odyssey');
 
 -- --------------------------------------------------------
@@ -286,7 +286,9 @@ INSERT INTO `evento` (`Inizio`, `Nome`, `Videogioco`, `Concluso`, `Durata_minuti
 ('2021-05-16 11:07:45', 'Bonus 2x', 7, 1, 80),
 ('2021-05-16 11:07:48', 'Bonus 2x', 1, 1, 80),
 ('2021-05-16 11:07:52', 'Bonus 2x', 4, 1, 80),
-('2021-05-17 11:38:30', 'Bonus 2x', 3, 0, 100);
+('2021-05-17 11:38:30', 'Bonus 2x', 3, 1, 100),
+('2021-05-21 11:09:39', 'Bonus 2x', 10, 1, 100),
+('2021-05-24 19:15:21', 'bonus 2x', 2, 1, 100);
 
 -- --------------------------------------------------------
 
@@ -345,16 +347,15 @@ CREATE TABLE `persona` (
 --
 
 INSERT INTO `persona` (`CF`, `Password`, `Nome`, `Anno_nascita`, `Occupazione`, `Punti_totali`) VALUES
-('bbc99', '$2y$10$rzMrWweRHNw/20gn4bC.F.VuhYF77ow3ps.Cti5FR3uV2a9bqVnBG', 'Giuseppe Calleri', '1999-09-03', 'Disoccupato', 242),
+('bbc99', '$2y$10$rzMrWweRHNw/20gn4bC.F.VuhYF77ow3ps.Cti5FR3uV2a9bqVnBG', 'Manuel Calle', '1999-09-03', 'studente', 242),
 ('bbn9', '$2y$10$SqMBaLRM5n2IN7IajVUoG.9Sc.xNvcPMH3SlRi.bPK/7mrrMtlKxu', 'Fabio Nicosia', '1990-07-30', 'BioMedico', 220),
 ('bccc79', '$2y$10$e7NJDcmlxu775a2T2y3rJuIPFcHBSDVk2WpJREjqJJE8an1yuvZkS', 'Alessandra Garaffo', '1979-02-11', 'Psicologo', 475),
 ('bln01', '$2y$10$P4d4rcfZ7.DaQ3B4q7fPM.w98WdNHxwrgDmo/CTANMfT40Zq9mFY.', 'Francesca Didio', '2001-07-08', 'Studente', 680),
 ('llpc01', '$2y$10$nl6xA2Y5rDc5IoZZuTOaZen1QVSoJefBa5A3Sr1XgXHaHOQ2nBPt.', 'Paola Gullotta', '1995-09-11', 'Dentista', 75),
 ('lmn98', '$2y$10$MCilTHlrwfDDz8VyYxPhtu2vwcdrlQ07jj0xcOT0NBj7W1/fIoBT.', 'Fancesco Fichera', '1998-03-22', 'youtuber', 185),
 ('mcr77', '$2y$10$ScW5j9ug3ZFVkwDMYdkzwOWSdsGIGV9OsxEPxaif3.BgClKtYzDpe', 'Guglielmo Cantone', '1965-08-16', 'Imprenditore', 511),
-('sylvia', '$2y$10$Zm6U2DkUSH.LFImqbNW7neKOk98caq7AzBqghNhz85CSJKwyENI8y', 'francesca corrao', '1999-07-08', 'studente', 0),
+('sylvia', '$2y$10$6dxKW.FUnCfy7CteuBE1l.Az4b/Mm/W4I4oOSYIGZPCATKe4FYOgK', 'francesca corrao', '1999-07-08', 'studente', 0),
 ('TheGarbage', '$2y$10$KhRBmOlrlBKHUTZa.6sOR.Xdj55eytZD5FZHIA7RUdY6aXseLn9f.', 'Davide Bucchieri', '1999-05-27', 'studente', 0),
-('williamGlasso', '$2y$10$3bR19oxP9au8Ap/yw.auX.kIfNUNcEcYhJa.NK.xrpda.6BGXydtG', 'a', '2001-11-11', '1', 0),
 ('yuv7', '$2y$10$8bmkQpnW2OAX.jyNnOaxMO2l7PknemFxvj6Qd2996Y27fbjKpedXC', 'Paola Valenti', '1969-09-11', 'Architetto', 110);
 
 -- --------------------------------------------------------
@@ -408,8 +409,14 @@ CREATE TABLE `preferiti` (
 
 INSERT INTO `preferiti` (`Codice_videogioco`, `cf`) VALUES
 (1, 'bbc99'),
+(3, 'bbc99'),
+(4, 'bbc99'),
+(6, 'bbc99'),
 (10, 'bbc99'),
-(11, 'bbc99');
+(12, 'bbc99'),
+(2, 'sylvia'),
+(5, 'sylvia'),
+(8, 'sylvia');
 
 -- --------------------------------------------------------
 
